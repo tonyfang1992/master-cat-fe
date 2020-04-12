@@ -1,19 +1,21 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Router from 'vue-router'
 import NotFound from '../views/NotFound'
+// import cats from '../views/cats'
 
-Vue.use(VueRouter)
+Vue.use(Router)
 
-const routes = [
-  {
-    path: '*',
-    name: 'not-found',
-    component: NotFound
-  }
-]
-
-const router = new VueRouter({
-  routes
+export default new Router({
+  routes: [
+    // {
+    //   path: '/',
+    //   name: 'cats',
+    //   component: cats
+    // },
+    {
+      path: '*',
+      name: 'not-found',
+      component: NotFound
+    }
+  ]
 })
-
-export default router
