@@ -1,0 +1,110 @@
+<template>
+  <div class="col-12">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a
+          class="nav-link active"
+          data-toggle="tab"
+          href="#home"
+          role="tab"
+          aria-controls="home"
+          aria-selected="true"
+          @click="showHotProducts"
+        >熱銷</a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          data-toggle="tab"
+          href="#profile"
+          role="tab"
+          aria-controls="profile"
+          aria-selected="false"
+          @click="showNewProducts"
+        >最新</a>
+      </li>
+    </ul>
+    <div class="col-12 row">
+      <div
+        v-show="showHot"
+        class="col-3 column text-center mt-2"
+        v-for="TopProduct in TopProductsAfter"
+        :key="TopProduct.id"
+      >
+        <router-link to="#" class="mr-5">
+          <img :src="TopProduct.img" width="100%" height="150px" />
+        </router-link>
+        <div class="product_name">
+          <h4>{{TopProduct.name}}</h4>
+        </div>
+        <div class="product_option">
+          <span>${{TopProduct.price}}</span>
+          <font-awesome-icon icon="shopping-cart" size="1x" />
+        </div>
+      </div>
+      <div
+        v-show="showNew"
+        class="col-3 column text-center mt-2"
+        v-for="NewProduct in NewProductsAfter"
+        :key="NewProduct.id"
+      >
+        <router-link to="#" class="mr-5">
+          <img :src="NewProduct.img" width="100%" height="150px" />
+        </router-link>
+        <div class="product_name">
+          <h4>{{NewProduct.name}}</h4>
+        </div>
+        <div class="product_option">
+          <span>${{NewProduct.price}}</span>
+          <font-awesome-icon icon="shopping-cart" size="1x" />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+export default {
+  props: {
+    TopProducts: {
+      type: Array,
+      required: true
+    },
+    NewProducts: {
+      type: Array,
+      required: true
+    }
+  },
+  data() {
+    return {
+      showHot: true,
+      showNew: false,
+      TopProductsAfter: this.TopProducts,
+      NewProductsAfter: this.NewProducts
+    };
+  },
+  watch: {
+    TopProducts(searchProducts) {
+      this.TopProductsAfter = {
+        ...this.TopProductsAfter,
+        ...searchProducts
+      };
+    },
+    NewProducts(searchProducts) {
+      this.NewProductsAfter = {
+        ...this.NewProductsAfter,
+        ...searchProducts
+      };
+    }
+  },
+  methods: {
+    showHotProducts() {
+      this.showHot = true;
+      this.showNew = false;
+    },
+    showNewProducts() {
+      this.showHot = false;
+      this.showNew = true;
+    }
+  }
+};
+</script>
