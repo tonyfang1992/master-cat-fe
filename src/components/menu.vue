@@ -27,6 +27,7 @@
 </template>
 <script>
 import activitiesAPI from "../apis/activities";
+import { Toast } from "../utils/helpers";
 const dummyData = {
   feedCategories: [
     { id: "221", name: "喵喵飼料 (品牌)" },
@@ -69,16 +70,20 @@ export default {
   methods: {
     async fetchMenu() {
       try {
-        const { data, status } = await activitiesAPI.activities.getMenu();
-        console.log(data);
-        console.log(status);
+        const { data, statusText } = await activitiesAPI.activities.getMenu();
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
         this.ThisWeekActivities = data.ThisWeekActivities;
         this.NewActivities = data.NewActivities;
         this.feedCategories = dummyData.feedCategories;
         this.cleanCategories = dummyData.cleanCategories;
         this.otherCategories = dummyData.otherCategories;
       } catch (error) {
-        console.log("123");
+        Toast.fire({
+          icon: "error",
+          title: "無法取得分類列表，請稍後再試",
+        });
       }
     },
   },
