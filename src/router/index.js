@@ -23,6 +23,11 @@ export default new Router({
       component: () => import("../views/Category.vue"),
     },
     {
+      path: "/subcategory/:id",
+      name: "subcategory",
+      component: () => import("../views/SubCategory.vue"),
+    },
+    {
       path: "/product/:product",
       name: "product",
       component: () => import("../views/Product.vue"),

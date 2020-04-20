@@ -6,4 +6,9 @@ export default {
       return apiHelper.get(`/category/${id}`);
     },
   },
+  subcategory: {
+    get(id) {
+      return apiHelper.get(`/subcategory/${id}`);
+    },
+  },
 };
