@@ -51,10 +51,10 @@
         v-show="showHot"
         class="col-3 column text-center mt-2"
         v-for="TopProduct in TopProductsAfter"
-        :key="TopProduct.id"
+        :key="'A'+TopProduct.id"
       >
         <router-link to="#" class="mr-5">
-          <img :src="TopProduct.img" width="100%" height="150px" />
+          <img :src="TopProduct.image" width="100%" height="150px" />
         </router-link>
         <div class="product_name">
           <h4>{{TopProduct.name}}</h4>
@@ -68,10 +68,10 @@
         v-show="showNew"
         class="col-3 column text-center mt-2"
         v-for="NewProduct in NewProductsAfter"
-        :key="NewProduct.id"
+        :key="'C'+NewProduct.id"
       >
         <router-link to="#" class="mr-5">
-          <img :src="NewProduct.img" width="100%" height="150px" />
+          <img :src="NewProduct.image" width="100%" height="150px" />
         </router-link>
         <div class="product_name">
           <h4>{{NewProduct.name}}</h4>
@@ -106,6 +106,20 @@ export default {
       NewProductsAfter: this.NewProducts
     };
   },
+  watch: {
+    TopProducts(TopProducts) {
+      this.TopProductsAfter = {
+        ...this.TopProductsAfter,
+        ...TopProducts
+      };
+    },
+    NewProducts(NewProducts) {
+      this.NewProductsAfter = {
+        ...this.NewProductsAfter,
+        ...NewProducts
+      };
+    }
+  },
   methods: {
     showHotProducts() {
       this.showHot = true;
@@ -118,12 +132,12 @@ export default {
     sortHotPrice() {
       if (this.sortHot) {
         this.sortHot = false;
-        this.TopProductsAfter = this.TopProductsAfter.sort(
+        this.TopProductsAfter = this.TopProducts.sort(
           (a, b) => a.price - b.price
         );
       } else {
         this.sortHot = true;
-        this.TopProductsAfter = this.TopProductsAfter.sort(
+        this.TopProductsAfter = this.TopProducts.sort(
           (a, b) => b.price - a.price
         );
       }
@@ -131,12 +145,12 @@ export default {
     sortNewPrice() {
       if (this.sortHot) {
         this.sortHot = false;
-        this.NewProductsAfter = this.NewProductsAfter.sort(
+        this.NewProductsAfter = this.NewProducts.sort(
           (a, b) => a.price - b.price
         );
       } else {
         this.sortHot = true;
-        this.NewProductsAfter = this.NewProductsAfter.sort(
+        this.NewProductsAfter = this.NewProducts.sort(
           (a, b) => b.price - a.price
         );
       }
