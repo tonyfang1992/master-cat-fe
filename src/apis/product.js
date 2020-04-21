@@ -11,5 +11,8 @@ export default {
     getNewProducts() {
       return apiHelper.get("/products/new");
     },
+    getHotProducts() {
+      return apiHelper.get("/products/hot");
+    },
   },
 };

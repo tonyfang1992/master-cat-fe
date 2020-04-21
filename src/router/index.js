@@ -48,6 +48,11 @@ export default new Router({
       component: () => import("../views/NewProducts.vue"),
     },
     {
+      path: "/products/hot",
+      name: "HotProduct",
+      component: () => import("../views/HotProducts.vue"),
+    },
+    {
       path: "/profile",
       name: "profile",
       component: () => import("../views/Profile.vue"),
