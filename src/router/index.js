@@ -28,6 +28,11 @@ export default new Router({
       component: () => import("../views/SubCategory.vue"),
     },
     {
+      path: "/thisweekactivity/:id",
+      name: "thisweekactivity",
+      component: () => import("../views/ThisWeekActivity.vue"),
+    },
+    {
       path: "/product/:product",
       name: "product",
       component: () => import("../views/Product.vue"),

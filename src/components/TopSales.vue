@@ -10,7 +10,8 @@
           aria-controls="home"
           aria-selected="true"
           @click="showHotProducts"
-        >熱銷</a>
+          >熱銷</a
+        >
       </li>
       <li class="nav-item">
         <a
@@ -21,7 +22,8 @@
           aria-controls="profile"
           aria-selected="false"
           @click="showNewProducts"
-        >最新</a>
+          >最新</a
+        >
       </li>
       <li v-show="showHot" class="nav-item">
         <a
@@ -32,7 +34,8 @@
           aria-controls="contact"
           aria-selected="false"
           @click="sortHotPrice"
-        >價格</a>
+          >價格</a
+        >
       </li>
       <li v-show="showNew" class="nav-item">
         <a
@@ -43,7 +46,8 @@
           aria-controls="contact"
           aria-selected="false"
           @click="sortNewPrice"
-        >價格</a>
+          >價格</a
+        >
       </li>
     </ul>
     <div class="col-12 row">
@@ -51,16 +55,16 @@
         v-show="showHot"
         class="col-3 column text-center mt-2"
         v-for="TopProduct in TopProductsAfter"
-        :key="'A'+TopProduct.id"
+        :key="'A' + TopProduct.id"
       >
         <router-link to="#" class="mr-5">
           <img :src="TopProduct.image" width="100%" height="150px" />
         </router-link>
         <div class="product_name">
-          <h4>{{TopProduct.name}}</h4>
+          <h4>{{ TopProduct.name }}</h4>
         </div>
         <div class="product_option">
-          <span>${{TopProduct.price}}</span>
+          <span>${{ TopProduct.price }}</span>
           <font-awesome-icon icon="shopping-cart" size="1x" />
         </div>
       </div>
@@ -68,16 +72,16 @@
         v-show="showNew"
         class="col-3 column text-center mt-2"
         v-for="NewProduct in NewProductsAfter"
-        :key="'C'+NewProduct.id"
+        :key="'C' + NewProduct.id"
       >
         <router-link to="#" class="mr-5">
           <img :src="NewProduct.image" width="100%" height="150px" />
         </router-link>
         <div class="product_name">
-          <h4>{{NewProduct.name}}</h4>
+          <h4>{{ NewProduct.name }}</h4>
         </div>
         <div class="product_option">
-          <span>${{NewProduct.price}}</span>
+          <span>${{ NewProduct.price }}</span>
           <font-awesome-icon icon="shopping-cart" size="1x" />
         </div>
       </div>
@@ -89,12 +93,12 @@ export default {
   props: {
     TopProducts: {
       type: Array,
-      required: true
+      required: true,
     },
     NewProducts: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -103,22 +107,22 @@ export default {
       sortHot: true,
       sortNew: true,
       TopProductsAfter: this.TopProducts,
-      NewProductsAfter: this.NewProducts
+      NewProductsAfter: this.NewProducts,
     };
   },
   watch: {
     TopProducts(TopProducts) {
       this.TopProductsAfter = {
         ...this.TopProductsAfter,
-        ...TopProducts
+        ...TopProducts,
       };
     },
     NewProducts(NewProducts) {
       this.NewProductsAfter = {
         ...this.NewProductsAfter,
-        ...NewProducts
+        ...NewProducts,
       };
-    }
+    },
   },
   methods: {
     showHotProducts() {
@@ -154,7 +158,7 @@ export default {
           (a, b) => b.price - a.price
         );
       }
-    }
-  }
+    },
+  },
 };
 </script>

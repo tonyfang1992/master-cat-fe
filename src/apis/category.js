@@ -11,4 +11,9 @@ export default {
       return apiHelper.get(`/subcategory/${id}`);
     },
   },
+  ThisWeekActivity: {
+    get(id) {
+      return apiHelper.get(`/thisweekactivity/${id}`);
+    },
+  },
 };
