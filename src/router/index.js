@@ -33,6 +33,11 @@ export default new Router({
       component: () => import("../views/ThisWeekActivity.vue"),
     },
     {
+      path: "/newactivity/:id",
+      name: "newactivity",
+      component: () => import("../views/NewActivity.vue"),
+    },
+    {
       path: "/product/:product",
       name: "product",
       component: () => import("../views/Product.vue"),

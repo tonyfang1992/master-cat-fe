@@ -16,4 +16,9 @@ export default {
       return apiHelper.get(`/thisweekactivity/${id}`);
     },
   },
+  NewActivity: {
+    get(id) {
+      return apiHelper.get(`/newactivity/${id}`);
+    },
+  },
 };
