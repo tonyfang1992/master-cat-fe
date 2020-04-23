@@ -2,10 +2,12 @@ import Vue from "vue";
 import Router from "vue-router";
 import NotFound from "../views/NotFound";
 import cats from "../views/Cats";
+import store from "../store/index";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
+  linkExactActiveClass: "active",
   routes: [
     {
       path: "/",
@@ -63,7 +65,7 @@ export default new Router({
       component: () => import("../views/HotProducts.vue"),
     },
     {
-      path: "/profile",
+      path: "/profile/:id",
       name: "profile",
       component: () => import("../views/Profile.vue"),
     },
@@ -84,3 +86,9 @@ export default new Router({
     },
   ],
 });
+router.beforeEach((to, from, next) => {
+  store.dispatch("fetchCurrentUser");
+  next();
+});
+
+export default router;

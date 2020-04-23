@@ -85,10 +85,10 @@ export default {
         }
         // 將 token 存放在 localStorage 內
         localStorage.setItem("token", data.token);
-        console.log("1");
+
         // 將資料傳到 Vuex中
         this.$store.commit("setCurrentUser", data.user);
-        console.log("2");
+
         // 成功登入後轉址到首頁
         this.$router.push("/cats");
       } catch (error) {

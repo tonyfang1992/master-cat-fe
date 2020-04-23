@@ -8,11 +8,11 @@
       <div class="col-6">
         <div class="col-12 row mx-0" style="background-color:pink; height:250px;">
           <div class="col-6 row align-items-center">
-            <h3>hi, {{user.name}}</h3>
-            <h3>{{user.identity}}</h3>
+            <h3>hi, {{ user.name }}</h3>
+            <h3>{{ user.rank }}</h3>
           </div>
           <div class="col-6 row align-items-center">
-            <h3>$ {{user.spendMoney}}</h3>
+            <h3>$ {{ user.spendMoney }}</h3>
             <h3>累積消費</h3>
           </div>
         </div>
@@ -33,10 +33,13 @@
           </b-list-group>
         </div>
       </div>
-      <div class="col-6">
+      <div v-if="user.Cats.length !== 0" class="col-6">
         <div class="col-12 row align-items-center border border-dark">
           <div class="col-6 my-3">
-            <h3>喵老大</h3>
+            <h3>{{ user.Cats[0].name }}</h3>
+            <h3>年齡 : {{ user.Cats[0].age }}</h3>
+            <h3>性別 : {{ user.Cats[0].gender }}</h3>
+            <h3>體重 : {{ user.Cats[0].weight }}</h3>
           </div>
           <div class="col-6 my-3">
             <img src="https://via.placeholder.com/150" />
@@ -58,8 +61,35 @@
           </div>
         </div>
         <div class="mt-5 text-center">
-          <button class="mr-3">登錄</button>
-          <button>修改</button>
+          <button @click="putCat()">修改</button>
+        </div>
+      </div>
+      <div v-if="user.Cats.length == 0" class="col-6">
+        <div class="col-12 row align-items-center border border-dark">
+          <div class="col-6 my-3">
+            <b-form-input v-model="catName" placeholder="喵大名字"></b-form-input>
+          </div>
+          <div class="col-6 my-3">
+            <img src="https://via.placeholder.com/150" />
+          </div>
+        </div>
+        <div class="col-12">
+          <div>
+            性別 :
+            <b-form-radio-group v-model="selected1" :options="gender" name="radio-inline"></b-form-radio-group>
+          </div>
+
+          <div>
+            年齡 :
+            <b-form-select v-model="selected2" :options="age"></b-form-select>
+          </div>
+          <div>
+            體重 :
+            <b-form-select v-model="selected3" :options="weight"></b-form-select>
+          </div>
+        </div>
+        <div class="mt-5 text-center">
+          <button class="mr-3" @click="postCat()">登錄</button>
         </div>
       </div>
     </div>
@@ -67,15 +97,10 @@
   </div>
 </template>
 <script>
-const dummyData = {
-  user: {
-    id: "213",
-    name: "王曉明",
-    spendMoney: "1922",
-    identity: "白銀會員"
-  }
-};
 import Menu from "../components/Menu";
+import userAPI from "../apis/user";
+import catAPI from "../apis/cat";
+import { Toast } from "../utils/helpers";
 export default {
   components: {
     Menu
@@ -83,10 +108,11 @@ export default {
   data() {
     return {
       user: [],
+      catName: "",
       selected1: null,
       gender: [
-        { text: "男", value: "man" },
-        { text: "女", value: "girl" }
+        { text: "男", value: "男生" },
+        { text: "女", value: "女生" }
       ],
       selected2: null,
       age: [
@@ -137,11 +163,85 @@ export default {
     };
   },
   created() {
-    this.fetchProfile();
+    const { id } = this.$route.params;
+    this.fetchProfile(id);
   },
   methods: {
-    fetchProfile() {
-      this.user = dummyData.user;
+    async fetchProfile(id) {
+      try {
+        const { data, statusText } = await userAPI.get(id);
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+        this.user = data.user;
+      } catch {
+        Toast.fire({
+          icon: "error",
+          title: "無法取得會員資料，請稍後再試"
+        });
+      }
+    },
+    async postCat() {
+      try {
+        if (
+          !this.catName ||
+          !this.selected1 ||
+          !this.selected2 ||
+          !this.selected3
+        ) {
+          Toast.fire({
+            icon: "error",
+            title: "請填入貓咪所有的資料唷!"
+          });
+          return;
+        }
+        const { data, statusText } = await catAPI.postCat({
+          name: this.catName,
+          gender: this.selected1,
+          age: this.selected2,
+          weight: this.selected3,
+          UserId: this.user.id
+        });
+        if (statusText !== "OK" || data.status !== "success") {
+          throw new Error(statusText);
+        }
+
+        this.$router.push("/cats");
+      } catch {
+        Toast.fire({
+          icon: "error",
+          title: "無法取得會員資料，請稍後再試"
+        });
+      }
+    },
+    async putCat() {
+      try {
+        if (!this.selected1 || !this.selected2 || !this.selected3) {
+          Toast.fire({
+            icon: "error",
+            title: "請填入貓咪所有的資料唷!"
+          });
+          return;
+        }
+        const { data, statusText } = await catAPI.putCat({
+          name: this.user.Cats[0].name,
+          gender: this.selected1,
+          age: this.selected2,
+          weight: this.selected3,
+          UserId: this.user.id,
+          CatId: this.user.Cats[0].id
+        });
+        if (statusText !== "OK" || data.status !== "success") {
+          throw new Error(statusText);
+        }
+
+        this.$router.push("/cats");
+      } catch {
+        Toast.fire({
+          icon: "error",
+          title: "無法取得會員資料，請稍後再試"
+        });
+      }
     }
   }
 };
