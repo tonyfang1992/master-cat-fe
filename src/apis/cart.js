@@ -18,4 +18,9 @@ export default {
       return apiHelper.delete(`/cartItem/${id}`);
     },
   },
+  orders: {
+    postOrder: (data) => {
+      return apiHelper.post("/order", { ...data });
+    },
+  },
 };
