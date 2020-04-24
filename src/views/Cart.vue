@@ -30,17 +30,17 @@
         <div class="col-3">已達免運標準，現省80$</div>
       </div>
       <div class="col-12">確認訂單</div>
-      <div class="col-12 row mt-3" v-for="product in products" :key="product.id">
+      <div class="col-12 row mt-3 border-bottom" v-for="product in products" :key="product.id">
         <div class="col-3">
           <img src="https://via.placeholder.com/150" />
         </div>
         <div class="col-6">
           <h3>{{product.name}}</h3>
-          <h4>{{product.description}}</h4>
-          <h5>{{product.activity}}</h5>
+          <h4>{{product.specification}}</h4>
         </div>
         <div class="col-3">
           <div class="col-12 inline">
+            單價 :
             <font-awesome-icon icon="dollar-sign" size="2x" />
             {{product.price}}
           </div>
@@ -54,7 +54,7 @@
               >
                 <font-awesome-icon :icon="['far','minus-square']" style="color:black" size="2x" />
               </button>
-              {{product.count}}
+              {{product.CartItem.quantity}}
               <button
                 type="button"
                 class="btn btn-link pl-0 pt-0 mt-0"
@@ -66,74 +66,72 @@
           </div>
         </div>
       </div>
+      <div class="col-8"></div>
+      <div class="col-4 text-right">
+        <h4>小計 :{{nowPrice}}</h4>
+        <h4>運費 :{{shipping}}</h4>
+        <h3>總計 :{{totalPrice}}</h3>
+      </div>
     </div>
 
     <div class="col-2 mt-5"></div>
   </div>
 </template>
 <script>
-const dummyData = {
-  products: [
-    {
-      id: "321344",
-      name: "AB綜合喵皇飼料",
-      description: "SUBZERO 頂級無穀貓凍乾 火雞肉 300克 (貓飼料)",
-      specification:
-        "成分：野生木天蓼棒、有機貓薄荷、安全柔軟高強度釣魚線尺寸：直徑約 8CM",
-      img: "https://via.placeholder.com/400x500",
-      discount: 75,
-      activity: "貪吃橘貓祭",
-      price: 1922,
-      count: 1
-    },
-    {
-      id: "19123",
-      name: "BC綜合喵皇飼料",
-      description: "SUBZERO 頂級無穀貓凍乾 雞肉 800克 (貓飼料)",
-      specification:
-        "成分：野生木天蓼棒、有機貓薄荷、安全柔軟高強度釣魚線尺寸：直徑約 8CM",
-      img: "https://via.placeholder.com/400x500",
-      discount: 75,
-      activity: "貪吃橘貓祭",
-      price: 1922,
-      count: 1
-    }
-  ]
-};
 import { Carousel, Slide } from "vue-carousel";
+import cartAPI from "../apis/cart";
+import { Toast } from "../utils/helpers.js";
 export default {
   components: { Carousel, Slide },
   data() {
     return {
-      products: []
+      products: [],
+      nowPrice: 0,
+      shipping: 80,
+      totalPrice: 0
     };
   },
   created() {
     this.fetchCart();
   },
   methods: {
-    fetchCart() {
-      this.products = dummyData.products;
+    async fetchCart() {
+      try {
+        const { data, statusText } = await cartAPI.carts.getCart(
+          localStorage.getItem("cartId")
+        );
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+        this.products = data.cart.items;
+        this.nowPrice = data.totalPrice;
+        this.totalPrice = this.nowPrice + this.shipping;
+      } catch {
+        Toast.fire({
+          icon: "error",
+          title: "目前無法取得購物車內商品,請稍後再試"
+        });
+      }
     },
     MinusProduct(id) {
       for (let i = 0; i < this.products.length; i++) {
-        if (this.products[i].id !== id) {
-          return;
-        }
-        if (this.products[i].count > 1) {
-          this.products[i].count -= 1;
+        if (this.products[i].id == id) {
+          if (this.products[i].CartItem.quantity > 1) {
+            this.products[i].CartItem.quantity -= 1;
+            this.nowPrice -= this.products[i].price;
+            this.totalPrice = this.nowPrice + this.shipping;
+          }
         }
       }
     },
     PlusProduct(id) {
-      console.log(id);
       for (let i = 0; i < this.products.length; i++) {
-        if (this.products[i].id !== id) {
-          console.log(i);
-          return;
-        }
-        if (this.products[i].count < 9) {
-          this.products[i].count += 1;
+        if (this.products[i].id == id) {
+          if (this.products[i].CartItem.quantity < 9) {
+            this.products[i].CartItem.quantity += 1;
+            this.nowPrice += this.products[i].price;
+            this.totalPrice = this.nowPrice + this.shipping;
+          }
         }
       }
     }
