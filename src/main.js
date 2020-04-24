@@ -14,6 +14,7 @@ import {
   faShippingFast,
   faAward,
   faDollarSign,
+  faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faMinusSquare,
@@ -35,7 +36,8 @@ library.add(
   faAward,
   faMinusSquare,
   faPlusSquare,
-  faDollarSign
+  faDollarSign,
+  faTimesCircle
 );
 Vue.use(BootstrapVue);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
