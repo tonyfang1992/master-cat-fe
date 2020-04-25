@@ -1,28 +1,49 @@
 <template>
   <ul>
     <li>本周主打</li>
-    <li
+    <router-link
       v-for="ThisWeekActivity in ThisWeekActivities"
       :key="'A' + ThisWeekActivity.id"
+      :to="{ name: 'thisweekactivity', params: { id: ThisWeekActivity.id } }"
     >
-      {{ ThisWeekActivity.name }}
-    </li>
+      <li>{{ ThisWeekActivity.name }}</li>
+    </router-link>
+
     <li>新品推薦</li>
-    <li v-for="NewActivity in NewActivities" :key="'B' + NewActivity.id">
-      {{ NewActivity.name }}
-    </li>
+    <router-link
+      v-for="NewActivity in NewActivities"
+      :key="'B' + NewActivity.id"
+      :to="{ name: 'newactivity', params: { id: NewActivity.id } }"
+    >
+      <li>{{ NewActivity.name }}</li>
+    </router-link>
+
     <li>喵大饗宴</li>
-    <li v-for="feedCategory in feedCategories" :key="feedCategory.id">
-      {{ feedCategory.name }}
-    </li>
+    <router-link
+      v-for="feedCategory in feedCategories"
+      :key="'C'+feedCategory.id"
+      :to="{ name: 'subcategory', params: { id: feedCategory.id } }"
+    >
+      <li>{{ feedCategory.name }}</li>
+    </router-link>
+
     <li>清潔/衛生用品</li>
-    <li v-for="cleanCategory in cleanCategories" :key="cleanCategory.id">
-      {{ cleanCategory.name }}
-    </li>
+    <router-link
+      v-for="cleanCategory in cleanCategories"
+      :key="'d'+cleanCategory.id"
+      :to="{ name: 'subcategory', params: { id: cleanCategory.id } }"
+    >
+      <li>{{ cleanCategory.name }}</li>
+    </router-link>
+
     <li>喵殿用品</li>
-    <li v-for="otherCategory in otherCategories" :key="otherCategory.id">
-      {{ otherCategory.name }}
-    </li>
+    <router-link
+      v-for="otherCategory in otherCategories"
+      :key="'e'+otherCategory.id"
+      :to="{ name: 'subcategory', params: { id: otherCategory.id } }"
+    >
+      <li>{{ otherCategory.name }}</li>
+    </router-link>
   </ul>
 </template>
 <script>
@@ -35,24 +56,24 @@ const dummyData = {
     { id: "23", name: "喵喵飼料 (依功能性)" },
     { id: "24", name: "喵喵罐頭 (品牌)" },
     { id: "25", name: "喵喵主 / 副食罐" },
-    { id: "26", name: "肉泥 / 化毛膏" },
+    { id: "1", name: "肉泥 / 化毛膏" },
     { id: "27", name: "副食 / 餐包 / 餐盒" },
-    { id: "28", name: "貓草 / 薄荷 / 木天蓼" },
-    { id: "29", name: "魚乾 / 魚條 / 肉鬆" },
+    { id: "2", name: "貓草 / 薄荷 / 木天蓼" },
+    { id: "3", name: "魚乾 / 魚條 / 肉鬆" }
   ],
   cleanCategories: [
-    { id: "331", name: "貓砂 / 貓砂盆 / 尿布墊" },
-    { id: "32", name: "洗沐 / 美容 / 清潔修剪" },
-    { id: "33", name: "環境清潔 / 消臭 / 驅蟲" },
+    { id: "4", name: "貓砂 / 貓砂盆 / 尿布墊" },
+    { id: "5", name: "洗沐 / 美容 / 清潔修剪" },
+    { id: "6", name: "環境清潔 / 消臭 / 驅蟲" }
   ],
   otherCategories: [
-    { id: "111", name: "汪喵保健食品" },
-    { id: "112", name: "貓抓板 / 紙屋 / 跳台" },
-    { id: "113", name: "餐桌 / 餐碗 / 飲水機" },
-    { id: "114", name: "逗貓棒 / 貓草玩具" },
-    { id: "511", name: "啃咬 /拉扯 / 陪伴玩具" },
-    { id: "1112", name: "外出箱包 / 胸背 / 牽繩 / 水壺" },
-  ],
+    { id: "8", name: "汪喵保健食品" },
+    { id: "9", name: "貓抓板 / 紙屋 / 跳台" },
+    { id: "10", name: "餐桌 / 餐碗 / 飲水機" },
+    { id: "11", name: "逗貓棒 / 貓草玩具" },
+    { id: "12", name: "啃咬 /拉扯 / 陪伴玩具" },
+    { id: "13", name: "外出箱包 / 胸背 / 牽繩 / 水壺" }
+  ]
 };
 export default {
   data() {
@@ -61,7 +82,7 @@ export default {
       NewActivities: [],
       feedCategories: [],
       cleanCategories: [],
-      otherCategories: [],
+      otherCategories: []
     };
   },
   created() {
@@ -82,10 +103,10 @@ export default {
       } catch (error) {
         Toast.fire({
           icon: "error",
-          title: "無法取得分類列表，請稍後再試",
+          title: "無法取得分類列表，請稍後再試"
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>

@@ -77,6 +77,11 @@
         <h4>運費 :{{shipping}}</h4>
         <h3>總計 :{{totalPrice}}</h3>
       </div>
+      <div class="col-12 text-center">
+        <router-link :to="{name:'checkout'}">
+          <b-button variant="danger" style="width:50%;">下一步</b-button>
+        </router-link>
+      </div>
     </div>
 
     <div class="col-2 mt-5"></div>

@@ -142,10 +142,9 @@ export default {
   methods: {
     async postCart(product) {
       try {
-        if (localStorage.getItem("cartId").length == 0) {
+        if (localStorage.getItem("cartId") == null) {
           localStorage.setItem("cartId", uuidv4());
         }
-
         const { data, statusText } = await cartAPI.carts.postCart({
           productId: product.productId,
           cartId: localStorage.getItem("cartId")
