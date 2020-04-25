@@ -25,6 +25,9 @@ export default {
     postOrder(data) {
       return apiHelper.post("/order", { ...data });
     },
+    cancelOrder(id) {
+      return apiHelper.post(`/order/${id}/cancel`);
+    },
   },
   payments: {
     getPayment(id) {

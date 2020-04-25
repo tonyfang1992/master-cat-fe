@@ -23,17 +23,15 @@
         </div>
         <div class="col-2 column">
           <div>
-            <button
-              type="button"
-              class="btn btn-primary pl-0 pt-0 mt-0 mb-1"
-              @click="DeleteItem(order.id)"
-            >立即付款</button>
+            <router-link :to="{ name: 'payment', params: { id: order.id } }">
+              <button type="button" class="btn btn-primary pl-0 pt-0 mt-0 mb-1">立即付款</button>
+            </router-link>
           </div>
           <div class="mt-1">
             <button
               type="button"
               class="btn btn-danger pl-0 pt-0 mt-0"
-              @click="DeleteItem(order.id)"
+              @click="DeleteOrder(order.id)"
             >取消訂單</button>
           </div>
         </div>
@@ -55,13 +53,13 @@ export default {
     };
   },
   created() {
-    this.fetchCart();
+    this.fetchOrders();
   },
   computed: {
     ...mapState(["currentUser", "isAuthenticated"])
   },
   methods: {
-    async fetchCart() {
+    async fetchOrders() {
       try {
         const { data, statusText } = await cartAPI.orders.getOrders(
           this.currentUser.id
@@ -74,6 +72,23 @@ export default {
         Toast.fire({
           icon: "error",
           title: "目前無法取得訂單內容,請稍後再試"
+        });
+      }
+    },
+    async DeleteOrder(id) {
+      try {
+        const { statusText } = await cartAPI.orders.cancelOrder(id);
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+        Toast.fire({
+          icon: "success",
+          title: "成功取消訂單"
+        });
+      } catch {
+        Toast.fire({
+          icon: "error",
+          title: "目前無法刪除"
         });
       }
     }

@@ -50,11 +50,6 @@ const router = new Router({
       component: () => import("../views/NewActivity.vue"),
     },
     {
-      path: "/products/:id",
-      name: "product",
-      component: () => import("../views/Product.vue"),
-    },
-    {
       path: "/products/new",
       name: "NewProduct",
       component: () => import("../views/NewProducts.vue"),
@@ -63,6 +58,11 @@ const router = new Router({
       path: "/products/hot",
       name: "HotProduct",
       component: () => import("../views/HotProducts.vue"),
+    },
+    {
+      path: "/products/:id",
+      name: "product",
+      component: () => import("../views/Product.vue"),
     },
     {
       path: "/profile/:id",
