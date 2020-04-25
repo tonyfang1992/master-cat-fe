@@ -81,13 +81,18 @@ const router = new Router({
     },
     {
       path: "/checkout",
-      name: "order",
+      name: "checkout",
       component: () => import("../views/Checkout.vue"),
     },
     {
-      path: "/order",
-      name: "order",
+      path: "/orders",
+      name: "orders",
       component: () => import("../views/Order.vue"),
+    },
+    {
+      path: "/orders/:id/payment",
+      name: "payment",
+      component: () => import("../views/Payment.vue"),
     },
     {
       path: "*",

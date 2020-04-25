@@ -199,7 +199,8 @@ export default {
           userId: id,
           name: this.name,
           phone: this.phone,
-          address: this.address
+          address: this.address,
+          amount: this.totalPrice
         });
         if (statusText !== "OK") {
           throw new Error(statusText);

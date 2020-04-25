@@ -8,19 +8,27 @@ export default {
     postCart(data) {
       return apiHelper.post("/cart", { ...data });
     },
-    addCartItem: (id) => {
+    addCartItem(id) {
       return apiHelper.post(`/cartItem/${id}/add`);
     },
-    subCartItem: (id) => {
+    subCartItem(id) {
       return apiHelper.post(`/cartItem/${id}/sub`);
     },
-    deleteCartItem: (id) => {
+    deleteCartItem(id) {
       return apiHelper.delete(`/cartItem/${id}`);
     },
   },
   orders: {
-    postOrder: (data) => {
+    getOrders(id) {
+      return apiHelper.get(`/orders/${id}`);
+    },
+    postOrder(data) {
       return apiHelper.post("/order", { ...data });
+    },
+  },
+  payments: {
+    getPayment(id) {
+      return apiHelper.get(`/orders/${id}/payment`);
     },
   },
 };
