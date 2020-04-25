@@ -31,7 +31,7 @@ export default {
   },
   payments: {
     getPayment(id) {
-      return apiHelper.get(`/orders/${id}/payment`);
+      return apiHelper.get(`/order/${id}/payment`);
     },
   },
 };
