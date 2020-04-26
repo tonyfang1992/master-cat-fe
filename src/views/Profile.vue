@@ -21,7 +21,7 @@
             <router-link to="#">
               <b-list-group-item>帳戶資料</b-list-group-item>
             </router-link>
-            <router-link to="#">
+            <router-link :to="{name:'orders'}">
               <b-list-group-item>查詢訂單</b-list-group-item>
             </router-link>
             <router-link to="#">

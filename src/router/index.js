@@ -5,6 +5,24 @@ import cats from "../views/Cats";
 import store from "../store/index";
 
 Vue.use(Router);
+// const authorizeIsAdmin = (to, from, next) => {
+//   const currentUser = store.state.currentUser;
+//   if (currentUser && !currentUser.isAdmin) {
+//     next("/404");
+//     return;
+//   }
+//   next();
+// };
+
+const isAuthenticated = (to, from, next) => {
+  const isAuthenticated = store.state.isAuthenticated;
+  if (!isAuthenticated) {
+    next("/signin");
+    return;
+  }
+
+  next();
+};
 
 const router = new Router({
   linkExactActiveClass: "active",
@@ -68,6 +86,7 @@ const router = new Router({
       path: "/profile/:id",
       name: "profile",
       component: () => import("../views/Profile.vue"),
+      beforeEnter: isAuthenticated,
     },
     {
       path: "/search",
@@ -83,16 +102,19 @@ const router = new Router({
       path: "/checkout",
       name: "checkout",
       component: () => import("../views/Checkout.vue"),
+      beforeEnter: isAuthenticated,
     },
     {
       path: "/orders",
       name: "orders",
       component: () => import("../views/Order.vue"),
+      beforeEnter: isAuthenticated,
     },
     {
       path: "/orders/:id/payment",
       name: "payment",
       component: () => import("../views/Payment.vue"),
+      beforeEnter: isAuthenticated,
     },
     {
       path: "*",
