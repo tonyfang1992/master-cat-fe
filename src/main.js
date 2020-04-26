@@ -20,6 +20,7 @@ import {
 import {
   faMinusSquare,
   faPlusSquare,
+  faCheckCircle,
 } from "@fortawesome/free-regular-svg-icons";
 import {
   FontAwesomeIcon,
@@ -39,7 +40,8 @@ library.add(
   faPlusSquare,
   faDollarSign,
   faTimesCircle,
-  faClipboardList
+  faClipboardList,
+  faCheckCircle
 );
 Vue.use(BootstrapVue);
 Vue.component("font-awesome-icon", FontAwesomeIcon);

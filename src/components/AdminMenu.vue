@@ -1,6 +1,6 @@
 <template>
   <ul>
-    <li>喵殿用品</li>
+    <li>後台管理</li>
     <router-link
       v-for="option in AdminMenu"
       :key="'x'+option.id"

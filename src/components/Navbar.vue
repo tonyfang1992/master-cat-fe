@@ -22,7 +22,11 @@
           </i>
         </router-link>
         <!-- is user is admin -->
-        <router-link v-if="currentUser.role == 'admin'" to="#" class="text-dark mr-3">
+        <router-link
+          v-if="currentUser.role == 'admin'"
+          :to="{name:'AdminCreateProduct'}"
+          class="text-dark mr-3"
+        >
           <i class="pv3 ph2 ma0 link grow">
             <font-awesome-icon icon="user-secret" class="icon alt" size="2x" />
           </i>

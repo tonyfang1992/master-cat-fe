@@ -1,9 +1,11 @@
 <template>
   <div class="inner row">
-    <div class="col-12 mt-5">
+    <div class="col-1"></div>
+    <div class="col-10 mt-5">
       <h1>新增商品</h1>
       <hr />
     </div>
+    <div class="col-1"></div>
     <div class="col-1 mt-5"></div>
     <div class="col-3 mt-5">
       <AdminMenu />
