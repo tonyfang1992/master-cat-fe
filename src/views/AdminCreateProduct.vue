@@ -1,0 +1,266 @@
+<template>
+  <div class="inner row">
+    <div class="col-12 mt-5">
+      <h1>新增商品</h1>
+      <hr />
+    </div>
+    <div class="col-1 mt-5"></div>
+    <div class="col-3 mt-5">
+      <AdminMenu />
+    </div>
+    <div class="col-7 row mt-5">
+      <form v-show="!isLoading" @submit.stop.prevent="handleSubmit" style="width:100%;">
+        <div class="form-group">
+          <label for="name">商品名稱</label>
+          <input
+            id="name"
+            v-model="product.name"
+            type="text"
+            class="form-control"
+            name="name"
+            placeholder="商品名稱"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="SubCategory">細項分類</label>
+          <select
+            id="SubCategory"
+            v-model="product.SubcategoryId"
+            class="form-control"
+            name="SubCategory"
+            required
+          >
+            <option value selected disabled>--請選擇--</option>
+            <option
+              v-for="SubCategory in SubCategories"
+              :key="SubCategory.id"
+              :value="SubCategory.id"
+            >{{ SubCategory.name }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="Category">大分類</label>
+          <select
+            id="Category"
+            v-model="product.CategoryId"
+            class="form-control"
+            name="Category"
+            required
+          >
+            <option value selected disabled>--請選擇--</option>
+            <option
+              v-for="Category in Categories"
+              :key="Category.id"
+              :value="Category.id"
+            >{{ Category.name }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="ThisWeekActivity">本周活動</label>
+          <select
+            id="ThisWeekActivity"
+            v-model="product.ThisWeekActivityId"
+            class="form-control"
+            name="ThisWeekActivity"
+          >
+            <option value selected disabled>--請選擇--</option>
+            <option
+              v-for="ThisWeekActivity in ThisWeekActivities"
+              :key="ThisWeekActivity.id"
+              :value="ThisWeekActivity.id"
+            >{{ ThisWeekActivity.name }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="NewActivity">新品推薦</label>
+          <select
+            id="NewActivity"
+            v-model="product.NewActivityId"
+            class="form-control"
+            name="NewActivity"
+          >
+            <option value selected disabled>--請選擇--</option>
+            <option
+              v-for="NewActivity in NewActivities"
+              :key="NewActivity.id"
+              :value="NewActivity.id"
+            >{{ NewActivity.name }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="description">商品描述</label>
+          <textarea
+            id="description"
+            v-model="product.description"
+            type="text"
+            class="form-control"
+            name="description"
+            placeholder="商品描述"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="specification">產品規格</label>
+          <input
+            id="specification"
+            v-model="product.specification"
+            type="text"
+            class="form-control"
+            placeholder="產品規格"
+            name="specification"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="detail">產品細節</label>
+          <textarea
+            id="detail"
+            v-model="product.detail"
+            type="text"
+            class="form-control"
+            placeholder="產品細節"
+            name="detail"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="price">定價</label>
+          <input
+            id="price"
+            v-model="product.price"
+            type="text"
+            class="form-control"
+            name="price"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="amount">庫存</label>
+          <input
+            id="amount"
+            v-model="product.amount"
+            type="text"
+            class="form-control"
+            name="amount"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="image">Image</label>
+          <img
+            v-if="product.image"
+            :src="product.image"
+            class="d-block img-thumbnail mb-3"
+            width="150"
+            height="150"
+          />
+          <input
+            id="image"
+            type="file"
+            name="image"
+            accept="image/*"
+            class="form-control-file"
+            @change="handleFileChange"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary">送出</button>
+      </form>
+    </div>
+    <div class="col-1 mt-5"></div>
+  </div>
+</template>
+<script>
+import AdminMenu from "../components/AdminMenu";
+import adminAPI from "../apis/admin";
+import { Toast } from "../utils/helpers";
+export default {
+  components: {
+    AdminMenu
+  },
+  data() {
+    return {
+      Categories: [],
+      SubCategories: [],
+      ThisWeekActivities: [],
+      NewActivities: [],
+      product: {
+        name: "",
+        description: "",
+        image: "",
+        amount: null,
+        specification: "",
+        price: null,
+        detail: "",
+        CategoryId: "",
+        SubcategoryId: "",
+        NewActivityId: "",
+        ThisWeekActivityId: ""
+      },
+      isLoading: true
+    };
+  },
+  created() {
+    this.fetchCreateProduct();
+  },
+  methods: {
+    async fetchCreateProduct() {
+      try {
+        const { data, statusText } = await adminAPI.getCreateProduct();
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+        this.Categories = data.Categories;
+        this.SubCategories = data.SubCategories;
+        this.ThisWeekActivities = data.ThisWeekActivities;
+        this.NewActivities = data.NewActivities;
+        this.isLoading = false;
+      } catch {
+        Toast.fire({
+          icon: "error",
+          title: "無法取得會員資料，請稍後再試"
+        });
+      }
+    },
+    handleFileChange(data) {
+      const files = data.target.files;
+      if (!files.length) return; // 如果沒有檔案則離開此函式
+      // 否則產生預覽圖...
+      const imageURL = window.URL.createObjectURL(files[0]);
+      this.product.image = imageURL;
+    },
+    async handleSubmit(data) {
+      try {
+        const form = data.target;
+        const formData = new FormData(form);
+        console.log(formData);
+        console.log(data);
+        for (let [name, value] of formData.entries()) {
+          console.log(name + ": " + value);
+        }
+        const { statusText } = await adminAPI.create({ formData });
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+        this.$router.push({ name: "cats" });
+      } catch {
+        Toast.fire({
+          icon: "error",
+          title: "現在無法新增商品，請稍後再試"
+        });
+      }
+    }
+  }
+};
+</script>
