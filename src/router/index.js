@@ -123,6 +123,12 @@ const router = new Router({
       beforeEnter: authorizeIsAdmin,
     },
     {
+      path: "/admin/NewActivity",
+      name: "AdminCreateActivity",
+      component: () => import("../views/AdminCreateActivity.vue"),
+      beforeEnter: authorizeIsAdmin,
+    },
+    {
       path: "*",
       name: "not-found",
       component: NotFound,

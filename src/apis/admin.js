@@ -2,9 +2,12 @@ import { apiHelper } from "./../utils/helpers";
 
 export default {
   getCreateProduct() {
-    return apiHelper.get("/admin/Createproduct");
+    return apiHelper.get("/admin/CreateProduct");
   },
-  create({ formData }) {
-    return apiHelper.post("/admin/product", formData);
+  createProduct({ formData }) {
+    return apiHelper.post("/admin/NewProduct", formData);
+  },
+  createActivity({ formData }) {
+    return apiHelper.post("/admin/NewActivity", formData);
   },
 };

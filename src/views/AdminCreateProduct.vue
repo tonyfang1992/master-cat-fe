@@ -251,7 +251,7 @@ export default {
         for (let [name, value] of formData.entries()) {
           console.log(name + ": " + value);
         }
-        const { statusText } = await adminAPI.create({ formData });
+        const { statusText } = await adminAPI.createProduct({ formData });
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
