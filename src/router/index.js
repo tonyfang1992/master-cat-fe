@@ -129,6 +129,12 @@ const router = new Router({
       beforeEnter: authorizeIsAdmin,
     },
     {
+      path: "/admin/store",
+      name: "AdminGetStore",
+      component: () => import("../views/AdminGetStore.vue"),
+      beforeEnter: authorizeIsAdmin,
+    },
+    {
       path: "*",
       name: "not-found",
       component: NotFound,

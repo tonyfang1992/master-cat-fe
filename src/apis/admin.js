@@ -4,6 +4,9 @@ export default {
   getCreateProduct() {
     return apiHelper.get("/admin/CreateProduct");
   },
+  getStore() {
+    return apiHelper.get("/admin/store");
+  },
   createProduct({ formData }) {
     return apiHelper.post("/admin/NewProduct", formData);
   },
