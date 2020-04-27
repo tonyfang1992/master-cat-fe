@@ -6,7 +6,7 @@
     </div>
     <div class="col-7 row mt-5">
       <div class="col-6">
-        <img :src="product.image" />
+        <img :src="product.image" style="width:320px; height:240px;" />
       </div>
       <div class="col-6">
         <div class="div">{{product.name}}</div>

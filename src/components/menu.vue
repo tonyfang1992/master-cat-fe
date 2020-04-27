@@ -1,50 +1,50 @@
 <template>
-  <ul>
-    <li>本周主打</li>
+  <b-list-group>
+    <b-list-group-item variant="danger">本周主打</b-list-group-item>
     <router-link
       v-for="ThisWeekActivity in ThisWeekActivities"
       :key="'A' + ThisWeekActivity.id"
       :to="{ name: 'thisweekactivity', params: { id: ThisWeekActivity.id } }"
     >
-      <li>{{ ThisWeekActivity.name }}</li>
+      <b-list-group-item class="word">{{ ThisWeekActivity.name }}</b-list-group-item>
     </router-link>
 
-    <li>新品推薦</li>
+    <b-list-group-item variant="danger">新品推薦</b-list-group-item>
     <router-link
       v-for="NewActivity in NewActivities"
       :key="'B' + NewActivity.id"
       :to="{ name: 'newactivity', params: { id: NewActivity.id } }"
     >
-      <li>{{ NewActivity.name }}</li>
+      <b-list-group-item class="word">{{ NewActivity.name }}</b-list-group-item>
     </router-link>
 
-    <li>喵大饗宴</li>
+    <b-list-group-item variant="danger">喵大饗宴</b-list-group-item>
     <router-link
       v-for="feedCategory in feedCategories"
       :key="'C'+feedCategory.id"
       :to="{ name: 'subcategory', params: { id: feedCategory.id } }"
     >
-      <li>{{ feedCategory.name }}</li>
+      <b-list-group-item class="word">{{ feedCategory.name }}</b-list-group-item>
     </router-link>
 
-    <li>清潔/衛生用品</li>
+    <b-list-group-item variant="danger">清潔/衛生用品</b-list-group-item>
     <router-link
       v-for="cleanCategory in cleanCategories"
       :key="'d'+cleanCategory.id"
       :to="{ name: 'subcategory', params: { id: cleanCategory.id } }"
     >
-      <li>{{ cleanCategory.name }}</li>
+      <b-list-group-item class="word">{{ cleanCategory.name }}</b-list-group-item>
     </router-link>
 
-    <li>喵殿用品</li>
+    <b-list-group-item variant="danger">喵殿用品</b-list-group-item>
     <router-link
       v-for="otherCategory in otherCategories"
       :key="'e'+otherCategory.id"
       :to="{ name: 'subcategory', params: { id: otherCategory.id } }"
     >
-      <li>{{ otherCategory.name }}</li>
+      <b-list-group-item class="word">{{ otherCategory.name }}</b-list-group-item>
     </router-link>
-  </ul>
+  </b-list-group>
 </template>
 <script>
 import activitiesAPI from "../apis/activities";
@@ -110,3 +110,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.word {
+  color: #4d4d4d;
+}
+</style>

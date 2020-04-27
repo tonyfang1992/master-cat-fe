@@ -104,6 +104,11 @@ export default {
   created() {
     this.fetchCart();
   },
+  watch: {
+    totalPrice(totalPrice) {
+      this.totalPrice = totalPrice;
+    }
+  },
   methods: {
     async fetchCart() {
       try {

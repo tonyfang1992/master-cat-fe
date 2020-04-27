@@ -1,21 +1,21 @@
 <template>
-  <ul>
-    <li>後台管理</li>
+  <b-list-group>
+    <b-list-group-item variant="danger">後台管理</b-list-group-item>
     <router-link
       v-for="option in AdminMenu"
       :key="'x'+option.id"
       :to="{ name: `${option.router}` }"
     >
-      <li>{{ option.name }}</li>
+      <b-list-group-item class="word">{{ option.name }}</b-list-group-item>
     </router-link>
-  </ul>
+  </b-list-group>
 </template>
 <script>
 const Menu = {
   AdminMenu: [
     { id: "1", name: "新增商品", router: "AdminCreateProduct" },
     { id: "2", name: "新增活動、分類", router: "AdminCreateActivity" },
-    { id: "3", name: "庫存、銷售", router: "AdminCreateProduct" },
+    { id: "3", name: "庫存、銷售", router: "AdminGetStore" },
     { id: "4", name: "查看訂單", router: "AdminCreateProduct" },
     { id: "5", name: "會員管理", router: "AdminCreateProduct" }
   ]
@@ -36,3 +36,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.word {
+  color: #4d4d4d;
+}
+</style>

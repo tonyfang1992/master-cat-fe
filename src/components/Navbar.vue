@@ -1,6 +1,8 @@
 <template>
-  <nav class="navbar navbar-expand-lg fixed-top navbar-light" style="background-color: #e3f2fd;">
-    <router-link class="navbar-brand" to="/">Master cat</router-link>
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light" style="background-color: #F5B7B1;">
+    <router-link class="navbar-brand" to="/">
+      <img src="@/assets/mastercat.png" width="100px" height="40px" />
+    </router-link>
 
     <button
       class="navbar-toggler"

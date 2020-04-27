@@ -88,7 +88,7 @@
           <span>${{ NewProduct.price }}</span>
           <button
             type="button"
-            class="btn btn-link pl-0 pt-0 mt-0"
+            class="btn pl-0 pt-0 mt-0"
             @click="
               postCart({ product: NewProduct.name, productId: NewProduct.id })
             "
@@ -200,3 +200,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.btn-link {
+  color: brown;
+}
+</style>

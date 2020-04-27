@@ -194,7 +194,7 @@ export default {
     },
     async postOrder(id) {
       try {
-        const { data, statusText } = await cartAPI.orders.postOrder({
+        const { statusText } = await cartAPI.orders.postOrder({
           cartId: localStorage.getItem("cartId"),
           userId: id,
           name: this.name,
@@ -205,9 +205,8 @@ export default {
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
-        console.log(data);
-        console.log(id);
-        this.$router.push("/cats");
+        localStorage.removeItem("cartId");
+        this.$router.push("/orders");
       } catch {
         Toast.fire({
           icon: "error",
