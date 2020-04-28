@@ -41,4 +41,9 @@ export default {
       return apiHelper.get(`/can/${id}`);
     },
   },
+  CanType: {
+    get(id) {
+      return apiHelper.get(`/cantype/${id}`);
+    },
+  },
 };

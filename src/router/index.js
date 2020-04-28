@@ -68,6 +68,11 @@ const router = new Router({
       component: () => import("../views/Can.vue"),
     },
     {
+      path: "/cantype/:id",
+      name: "cantype",
+      component: () => import("../views/CanType.vue"),
+    },
+    {
       path: "/category/:id",
       name: "category",
       component: () => import("../views/Category.vue"),

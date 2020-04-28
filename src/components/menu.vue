@@ -79,7 +79,7 @@
       <router-link
         v-for="CanType in CanTypes"
         :key="'j'+CanType.id"
-        :to="{ name: 'subcategory', params: { id: CanType.id } }"
+        :to="{ name: 'cantype', params: { id: CanType.id } }"
       >
         <b-list-group-item class="word">{{ CanType.type }}</b-list-group-item>
       </router-link>
