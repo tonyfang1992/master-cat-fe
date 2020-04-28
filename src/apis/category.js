@@ -21,4 +21,9 @@ export default {
       return apiHelper.get(`/newactivity/${id}`);
     },
   },
+  Feed: {
+    get(id) {
+      return apiHelper.get(`/feed/${id}`);
+    },
+  },
 };

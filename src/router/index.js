@@ -48,6 +48,11 @@ const router = new Router({
       component: cats,
     },
     {
+      path: "/feed/:id",
+      name: "feed",
+      component: () => import("../views/Feed.vue"),
+    },
+    {
       path: "/category/:id",
       name: "category",
       component: () => import("../views/Category.vue"),
