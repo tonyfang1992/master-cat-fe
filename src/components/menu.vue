@@ -53,7 +53,7 @@
       <router-link
         v-for="FeedFunction in FeedFunctions"
         :key="'i'+FeedFunction.id"
-        :to="{ name: 'subcategory', params: { id: FeedFunction.id } }"
+        :to="{ name: 'feedfunction', params: { id: FeedFunction.id } }"
       >
         <b-list-group-item class="word">{{ FeedFunction.function }}</b-list-group-item>
       </router-link>

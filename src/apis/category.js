@@ -31,4 +31,9 @@ export default {
       return apiHelper.get(`/feedage/${id}`);
     },
   },
+  FeedFunction: {
+    get(id) {
+      return apiHelper.get(`/feedfunction/${id}`);
+    },
+  },
 };

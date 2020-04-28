@@ -57,7 +57,11 @@ const router = new Router({
       name: "feedage",
       component: () => import("../views/FeedAge.vue"),
     },
-
+    {
+      path: "/feedfunction/:id",
+      name: "feedfunction",
+      component: () => import("../views/FeedFunction.vue"),
+    },
     {
       path: "/category/:id",
       name: "category",
