@@ -40,7 +40,7 @@
       <router-link
         v-for="FeedAge in FeedAges"
         :key="'h'+FeedAge.id"
-        :to="{ name: 'subcategory', params: { id: FeedAge.id } }"
+        :to="{ name: 'feedage', params: { id: FeedAge.id } }"
       >
         <b-list-group-item class="word">{{ FeedAge.age }}</b-list-group-item>
       </router-link>

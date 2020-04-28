@@ -53,6 +53,12 @@ const router = new Router({
       component: () => import("../views/Feed.vue"),
     },
     {
+      path: "/feedage/:id",
+      name: "feedage",
+      component: () => import("../views/FeedAge.vue"),
+    },
+
+    {
       path: "/category/:id",
       name: "category",
       component: () => import("../views/Category.vue"),

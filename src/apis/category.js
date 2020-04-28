@@ -26,4 +26,9 @@ export default {
       return apiHelper.get(`/feed/${id}`);
     },
   },
+  FeedAge: {
+    get(id) {
+      return apiHelper.get(`/feedage/${id}`);
+    },
+  },
 };
