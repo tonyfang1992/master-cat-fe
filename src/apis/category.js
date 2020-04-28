@@ -36,4 +36,9 @@ export default {
       return apiHelper.get(`/feedfunction/${id}`);
     },
   },
+  Can: {
+    get(id) {
+      return apiHelper.get(`/can/${id}`);
+    },
+  },
 };

@@ -63,6 +63,11 @@ const router = new Router({
       component: () => import("../views/FeedFunction.vue"),
     },
     {
+      path: "/can/:id",
+      name: "can",
+      component: () => import("../views/Can.vue"),
+    },
+    {
       path: "/category/:id",
       name: "category",
       component: () => import("../views/Category.vue"),

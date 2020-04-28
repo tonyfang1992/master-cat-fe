@@ -66,7 +66,7 @@
       <router-link
         v-for="Can in Cans"
         :key="'j'+Can.id"
-        :to="{ name: 'subcategory', params: { id: Can.id } }"
+        :to="{ name: 'can', params: { id: Can.id } }"
       >
         <b-list-group-item class="word">{{ Can.brand }}</b-list-group-item>
       </router-link>
