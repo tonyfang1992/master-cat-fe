@@ -32,7 +32,13 @@
             </button>
           </div>
           <div class="col-6">
-            <button type="button" class="btn btn-info">加入購物車</button>
+            <button
+              type="button"
+              class="btn btn-info"
+              @click="
+              postCart({ product: product.name, productId: product.id })
+            "
+            >加入購物車</button>
           </div>
         </div>
       </div>
@@ -58,7 +64,9 @@
 import Menu from "../components/Menu";
 import TopSales from "../components/TopSales";
 import categoryAPI from "../apis/product";
+import cartAPI from "../apis/cart";
 import { Toast } from "../utils/helpers";
+import { v4 as uuidv4 } from "uuid";
 export default {
   components: {
     Menu,
@@ -97,6 +105,29 @@ export default {
         Toast.fire({
           icon: "error",
           title: "無法取得該商品資訊，請稍後再試"
+        });
+      }
+    },
+    async postCart(product) {
+      try {
+        if (localStorage.getItem("cartId") == null) {
+          localStorage.setItem("cartId", uuidv4());
+        }
+        const { data, statusText } = await cartAPI.carts.postCart({
+          productId: product.productId,
+          cartId: localStorage.getItem("cartId")
+        });
+        if (statusText !== "OK" || data.status !== "success") {
+          throw new Error(statusText);
+        }
+        Toast.fire({
+          icon: "success",
+          title: `成功將商品 - ${product.product} - 加入購物車`
+        });
+      } catch {
+        Toast.fire({
+          icon: "error",
+          title: "目前無法購買該商品，請重新整理"
         });
       }
     },

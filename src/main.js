@@ -10,14 +10,11 @@ import {
   faUser,
   faSearch,
   faShoppingCart,
-  faBolt,
-  faFireAlt,
-  faShippingFast,
-  faAward,
   faDollarSign,
   faTimesCircle,
   faClipboardList,
   faCaretDown,
+  faPaw,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faMinusSquare,
@@ -34,17 +31,14 @@ library.add(
   faUser,
   faSearch,
   faShoppingCart,
-  faBolt,
-  faFireAlt,
-  faShippingFast,
-  faAward,
   faMinusSquare,
   faPlusSquare,
   faDollarSign,
   faTimesCircle,
   faClipboardList,
   faCheckCircle,
-  faCaretDown
+  faCaretDown,
+  faPaw
 );
 Vue.use(BootstrapVue);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
