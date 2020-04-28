@@ -18,6 +18,31 @@
 
     <div id="navbarSupportedContent" class="navbar-collapse collapse">
       <div class="ml-auto d-flex align-items-center">
+        <b-button id="suggest" v-b-toggle.sidebar-1 class="mr-2" @click="getCat()">
+          <font-awesome-icon icon="paw" size="2x" />
+        </b-button>
+        <b-sidebar id="sidebar-1" title="貓老大伙食建議" shadow>
+          <div v-if="hasCat" class="px-3 py-2">
+            <p>以下根據"{{cat.name}}"的年齡、體重，推薦您最棒的東西喔!</p>
+            <router-link
+              v-for="FeedAge in FeedAge"
+              :key="'h'+FeedAge.id"
+              :to="{ name: 'feedage', params: { id: FeedAge.id } }"
+            >
+              <b-list-group-item class="word">{{ FeedAge.age }}</b-list-group-item>
+            </router-link>
+            <div v-for="FeedFunction in FeedFunction" :key="'h'+FeedFunction.id">
+              <p>{{FeedFunction.description}}</p>
+              <router-link :to="{ name: 'feedfunction', params: { id: FeedFunction.id } }">
+                <b-list-group-item class="word">{{ FeedFunction.function }}</b-list-group-item>
+              </router-link>
+            </div>
+          </div>
+          <div v-else>沒貓喔!</div>
+          <div class="text-center">
+            <font-awesome-icon icon="paw" size="10x" />
+          </div>
+        </b-sidebar>
         <router-link to="#" class="text-dark mr-3">
           <i class="pv3 ph2 ma0 link grow">
             <font-awesome-icon icon="search" size="2x" />
@@ -71,12 +96,41 @@
 <script>
 import { mapState } from "vuex";
 import cartAPI from "../apis/cart";
+import catAPI from "../apis/cat";
 import { Toast } from "../utils/helpers";
 export default {
+  data() {
+    return {
+      FeedAge: [],
+      FeedFunction: [],
+      cat: [],
+      hasCat: false
+    };
+  },
+
   computed: {
     ...mapState(["currentUser", "isAuthenticated"])
   },
   methods: {
+    async getCat() {
+      try {
+        const { data, statusText } = await catAPI.getCat(this.currentUser.id);
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+        if (data.cat !== null) {
+          this.FeedAge = data.FeedAge;
+          this.FeedFunction = data.FeedFunction;
+          this.cat = data.cat;
+        }
+        this.hasCat = true;
+      } catch {
+        Toast.fire({
+          icon: "error",
+          title: "無法取得您的貓咪資料，請稍後再試"
+        });
+      }
+    },
     async goOrder(UserId) {
       try {
         const { statusText } = await cartAPI.orders.getOrders(UserId);
@@ -94,3 +148,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.word {
+  color: orangered;
+}
+</style>

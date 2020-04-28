@@ -24,8 +24,8 @@
       </carousel>
     </div>
     <div class="col-1"></div>
-    <div class="col-1"></div>
-    <div class="container col-3">
+    <div class="col-2"></div>
+    <div class="container col-2">
       <Menu />
     </div>
     <div class="category-4 container col-7 row">
