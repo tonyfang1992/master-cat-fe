@@ -1,5 +1,5 @@
 import { apiHelper } from "../utils/helpers";
-
+const getToken = () => localStorage.getItem("token");
 export default {
   carts: {
     getCart(id) {
@@ -20,18 +20,30 @@ export default {
   },
   orders: {
     getOrders(id) {
-      return apiHelper.get(`/orders/${id}`);
+      return apiHelper.get(`/orders/${id}`, {
+        headers: { Authorization: `Bearer ${getToken()}` },
+      });
     },
     postOrder(data) {
-      return apiHelper.post("/order", { ...data });
+      return apiHelper.post(
+        "/order",
+        { ...data },
+        {
+          headers: { Authorization: `Bearer ${getToken()}` },
+        }
+      );
     },
     cancelOrder(id) {
-      return apiHelper.post(`/order/${id}/cancel`);
+      return apiHelper.delete(`/order/${id}/cancel`, {
+        headers: { Authorization: `Bearer ${getToken()}` },
+      });
     },
   },
   payments: {
     getPayment(id) {
-      return apiHelper.get(`/order/${id}/payment`);
+      return apiHelper.get(`/order/${id}/payment`, {
+        headers: { Authorization: `Bearer ${getToken()}` },
+      });
     },
   },
 };
