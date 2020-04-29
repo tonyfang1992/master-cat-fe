@@ -25,9 +25,9 @@
         </carousel>
       </div>
       <div class="col-12 shadow p-3 mb-5 mx-0 bg-white rounded row">
-        <div class="col-3">免運資格</div>
+        <div class="col-3">免運資格:滿$666元，免運費!</div>
         <div class="col-6"></div>
-        <div class="col-3">已達免運標準，現省80$</div>
+        <div v-if="this.nowPrice>666" class="col-3">已達免運標準，現省80$</div>
       </div>
       <div class="col-12">確認訂單</div>
       <div class="col-12 row mt-3 border-bottom" v-for="product in products" :key="product.id">
@@ -74,7 +74,8 @@
       <div class="col-8"></div>
       <div class="col-4 text-right">
         <h4>小計 :{{nowPrice}}</h4>
-        <h4>運費 :{{shipping}}</h4>
+        <h4 v-if="this.nowPrice<666">運費 :{{shipping}}</h4>
+        <h4 v-else>運費 : 免運費!</h4>
         <h3>總計 :{{totalPrice}}</h3>
       </div>
       <div class="col-12 text-center">
@@ -120,7 +121,11 @@ export default {
         }
         this.products = data.cart.items;
         this.nowPrice = data.totalPrice;
-        this.totalPrice = this.nowPrice + this.shipping;
+        if (666 < this.nowPrice) {
+          this.totalPrice = this.nowPrice;
+        } else {
+          this.totalPrice = this.nowPrice + this.shipping;
+        }
       } catch {
         Toast.fire({
           icon: "error",

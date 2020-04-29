@@ -160,7 +160,6 @@ export default {
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
-        console.log(data);
         this.Cans = data.Cans;
         this.CanTypes = data.CanTypes;
         this.Feeds = data.Feeds;

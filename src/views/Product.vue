@@ -9,9 +9,11 @@
         <img :src="product.image" style="width:320px; height:240px;" />
       </div>
       <div class="col-6">
-        <div class="div">{{product.name}}</div>
+        <div class="div">
+          <h2>{{product.name}}</h2>
+        </div>
         <div class="div mt-2">
-          <h3>{{product.description}}</h3>
+          <h6>{{product.description}}</h6>
         </div>
         <div class="div mt-2">折扣 : {{product.discount}} 折</div>
         <div class="div mt-2">價格 : {{product.price}} 元</div>

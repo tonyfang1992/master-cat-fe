@@ -19,6 +19,7 @@
           </div>
         </div>
         <div class="col-2 word">
+          <h6>運費:80 (滿666免運)</h6>
           <h3>總計 :{{order.amount}}</h3>
         </div>
         <div v-if="order.payment_status == '1'" class="col-2">
