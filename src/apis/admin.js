@@ -31,4 +31,9 @@ export default {
       headers: { Authorization: `Bearer ${getToken()}` },
     });
   },
+  createFeedorCan({ formData }) {
+    return apiHelper.post("/admin/FeedorCan", formData, {
+      headers: { Authorization: `Bearer ${getToken()}` },
+    });
+  },
 };

@@ -44,14 +44,14 @@
         </div>
 
         <div class="form-group">
-          <label for="description">商品描述</label>
+          <label for="description">活動描述</label>
           <textarea
             id="description"
             v-model="Activity.description"
             type="text"
             class="form-control"
             name="description"
-            placeholder="商品描述"
+            placeholder="活動描述"
             required
           />
         </div>
@@ -118,10 +118,10 @@ export default {
     };
   },
   created() {
-    this.fetchCreateProduct();
+    this.fetchCreateActivity();
   },
   methods: {
-    fetchCreateProduct() {
+    fetchCreateActivity() {
       this.Activities = dummyData;
       this.isLoading = false;
     },

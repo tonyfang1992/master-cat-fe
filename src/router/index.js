@@ -160,6 +160,12 @@ const router = new Router({
       beforeEnter: authorizeIsAdmin,
     },
     {
+      path: "/admin/CreateFeed",
+      name: "AdminCreateFeed",
+      component: () => import("../views/AdminCreateFeed.vue"),
+      beforeEnter: authorizeIsAdmin,
+    },
+    {
       path: "/admin/store",
       name: "AdminGetStore",
       component: () => import("../views/AdminGetStore.vue"),
