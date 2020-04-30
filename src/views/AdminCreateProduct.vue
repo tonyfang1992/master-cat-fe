@@ -26,24 +26,6 @@
         </div>
 
         <div class="form-group">
-          <label for="SubCategory">細項分類</label>
-          <select
-            id="SubCategory"
-            v-model="product.SubcategoryId"
-            class="form-control"
-            name="SubCategory"
-            required
-          >
-            <option value selected disabled>--請選擇--</option>
-            <option
-              v-for="SubCategory in SubCategories"
-              :key="SubCategory.id"
-              :value="SubCategory.id"
-            >{{ SubCategory.name }}</option>
-          </select>
-        </div>
-
-        <div class="form-group">
           <label for="Category">大分類</label>
           <select
             id="Category"
@@ -58,6 +40,91 @@
               :key="Category.id"
               :value="Category.id"
             >{{ Category.name }}</option>
+          </select>
+        </div>
+
+        <div v-if="product.CategoryId == 2" class="form-group">
+          <label for="Can">罐頭品牌</label>
+          <select id="Can" v-model="product.CanId" class="form-control" name="Can" required>
+            <option value selected disabled>--請選擇--</option>
+            <option v-for="Can in Cans" :key="Can.id" :value="Can.id">{{ Can.brand }}</option>
+          </select>
+        </div>
+        <div v-if="product.CategoryId == 2" class="form-group">
+          <label for="CanType">罐頭分類</label>
+          <select
+            id="CanType"
+            v-model="product.CanTypeId"
+            class="form-control"
+            name="CanType"
+            required
+          >
+            <option value selected disabled>--請選擇--</option>
+            <option
+              v-for="CanType in CanTypes"
+              :key="CanType.id"
+              :value="CanType.id"
+            >{{ CanType.type }}</option>
+          </select>
+        </div>
+
+        <div v-if="product.CategoryId == 1" class="form-group">
+          <label for="Feed">飼料品牌</label>
+          <select id="Feed" v-model="product.FeedId" class="form-control" name="Feed" required>
+            <option value selected disabled>--請選擇--</option>
+            <option v-for="Feed in Feeds" :key="Feed.id" :value="Feed.id">{{ Feed.brand }}</option>
+          </select>
+        </div>
+        <div v-if="product.CategoryId == 1" class="form-group">
+          <label for="FeedAge">飼料(依年齡)</label>
+          <select
+            id="FeedAge"
+            v-model="product.FeedAgeId"
+            class="form-control"
+            name="FeedAge"
+            required
+          >
+            <option value selected disabled>--請選擇--</option>
+            <option
+              v-for="FeedAge in FeedAges"
+              :key="FeedAge.id"
+              :value="FeedAge.id"
+            >{{ FeedAge.age }}</option>
+          </select>
+        </div>
+        <div v-if="product.CategoryId == 1" class="form-group">
+          <label for="FeedFunction">飼料(依功能性)</label>
+          <select
+            id="FeedFunction"
+            v-model="product.FeedFunctionId"
+            class="form-control"
+            name="FeedFunction"
+            required
+          >
+            <option value selected disabled>--請選擇--</option>
+            <option
+              v-for="FeedFunction in FeedFunctions"
+              :key="FeedFunction.id"
+              :value="FeedFunction.id"
+            >{{ FeedFunction.function }}</option>
+          </select>
+        </div>
+
+        <div v-if="product.CategoryId !== 1&&product.CategoryId!==2" class="form-group">
+          <label for="SubCategory">細項分類</label>
+          <select
+            id="SubCategory"
+            v-model="product.SubcategoryId"
+            class="form-control"
+            name="SubCategory"
+            required
+          >
+            <option value selected disabled>--請選擇--</option>
+            <option
+              v-for="SubCategory in SubCategories"
+              :key="SubCategory.id"
+              :value="SubCategory.id"
+            >{{ SubCategory.name }}</option>
           </select>
         </div>
 
@@ -197,6 +264,11 @@ export default {
       SubCategories: [],
       ThisWeekActivities: [],
       NewActivities: [],
+      Cans: [],
+      CanTypes: [],
+      Feeds: [],
+      FeedAges: [],
+      FeedFunctions: [],
       product: {
         name: "",
         description: "",
@@ -205,6 +277,7 @@ export default {
         specification: "",
         price: null,
         detail: "",
+        CanId: "",
         CategoryId: "",
         SubcategoryId: "",
         NewActivityId: "",
@@ -223,10 +296,16 @@ export default {
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
+        console.log(data);
         this.Categories = data.Categories;
         this.SubCategories = data.SubCategories;
         this.ThisWeekActivities = data.ThisWeekActivities;
         this.NewActivities = data.NewActivities;
+        this.Cans = data.Cans;
+        this.CanTypes = data.CanTypes;
+        this.Feeds = data.Feeds;
+        this.FeedAges = data.FeedAges;
+        this.FeedFunctions = data.FeedFunctions;
         this.isLoading = false;
       } catch {
         Toast.fire({
