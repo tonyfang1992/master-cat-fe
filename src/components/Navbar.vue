@@ -38,7 +38,12 @@
               </router-link>
             </div>
           </div>
-          <div v-else>沒貓喔!</div>
+          <div v-else class="px-3 py-2">
+            <p>快來去登錄您家的貓咪吧!</p>
+            <router-link :to="{name:'profile',params: { id: currentUser.id }}">
+              <b-list-group-item class="word">新增愛貓</b-list-group-item>
+            </router-link>
+          </div>
           <div class="text-center">
             <font-awesome-icon icon="paw" size="10x" />
           </div>
@@ -122,8 +127,8 @@ export default {
           this.FeedAge = data.FeedAge;
           this.FeedFunction = data.FeedFunction;
           this.cat = data.cat;
+          this.hasCat = true;
         }
-        this.hasCat = true;
       } catch {
         Toast.fire({
           icon: "error",
