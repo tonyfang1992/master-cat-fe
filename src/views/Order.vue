@@ -22,10 +22,10 @@
           <h6>運費:80 (滿666免運)</h6>
           <h3>總計 :{{order.amount}}</h3>
         </div>
-        <div v-if="order.payment_status == '1'" class="col-2">
+        <div v-if="order.payment_status == '完成付款'" class="col-2">
           <font-awesome-icon :icon="['far','check-circle']" class="pay" size="2x" />已付款
         </div>
-        <div v-else-if="order.payment_status == '-1'" class="col-2">
+        <div v-else-if="order.payment_status == '取消訂單'" class="col-2">
           已取消訂單，還是想買?
           <router-link :to="{ name: 'payment', params: { id: order.id } }">
             <button type="button" class="btn btn-primary pl-0 pt-0 mt-0 mb-1">立即付款</button>
@@ -93,7 +93,7 @@ export default {
         }
         for (let i = 0; i < this.orders.length; i++) {
           if (this.orders[i].id == id) {
-            this.orders[i].payment_status = "-1";
+            this.orders[i].payment_status = "取消訂單";
           }
         }
         Toast.fire({
