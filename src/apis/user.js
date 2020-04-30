@@ -12,6 +12,15 @@ export default {
       headers: { Authorization: `Bearer ${getToken()}` },
     });
   },
+  put(data) {
+    return apiHelper.post(
+      `/profile/`,
+      { ...data },
+      {
+        headers: { Authorization: `Bearer ${getToken()}` },
+      }
+    );
+  },
   signUp(data) {
     return apiHelper.post("/signup", { ...data });
   },

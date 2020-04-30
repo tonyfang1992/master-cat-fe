@@ -7,29 +7,47 @@
     <div class="col-7 row mt-5">
       <div class="col-6">
         <div class="col-12 row mx-0" style="background-color:pink; height:250px;">
-          <div class="col-6 row align-items-center">
-            <h3>hi, {{ user.name }}</h3>
-            <h3>{{ user.rank }}</h3>
+          <div v-if="isAddress" class="col-12">
+            <div>
+              姓名 : {{user.name}}
+              <b-form-input v-model="userName"></b-form-input>
+            </div>
+
+            <div>
+              電話 : {{user.phone}}
+              <b-form-input v-model="phone"></b-form-input>
+            </div>
+            <div>
+              地址 :{{user.address}}
+              <b-form-input v-model="address"></b-form-input>
+            </div>
+            <button class="btn btn-primary" @click="putUser()">送出修改</button>
           </div>
-          <div class="col-6 row align-items-center">
-            <h3>$ {{ user.spendMoney }}</h3>
-            <h3>累積消費</h3>
+          <div v-else class="col-12 row">
+            <div class="col-6 row align-items-center">
+              <h3>hi, {{ user.name }}</h3>
+              <h3>{{ user.rank }}</h3>
+            </div>
+            <div class="col-6 row align-items-center">
+              <h3>$ {{ user.spendMoney }}</h3>
+              <h3>累積消費</h3>
+            </div>
           </div>
         </div>
         <div class="col-12">
           <b-list-group>
-            <router-link to="#">
-              <b-list-group-item>帳戶資料</b-list-group-item>
-            </router-link>
-            <router-link :to="{name:'orders'}">
+            <button class="btn btn-link" @click="showInfo()">
+              <b-list-group-item>會員狀態</b-list-group-item>
+            </button>
+            <button class="btn btn-link" @click="goOrder(currentUser.id)">
               <b-list-group-item>查詢訂單</b-list-group-item>
-            </router-link>
-            <router-link to="#">
+            </button>
+            <button class="btn btn-link" @click="showAddress()">
               <b-list-group-item>常用地址</b-list-group-item>
-            </router-link>
-            <router-link to="#">
+            </button>
+            <button class="btn btn-link" @click="logOut()">
               <b-list-group-item>登出</b-list-group-item>
-            </router-link>
+            </button>
           </b-list-group>
         </div>
       </div>
@@ -100,7 +118,9 @@
 import Menu from "../components/Menu";
 import userAPI from "../apis/user";
 import catAPI from "../apis/cat";
+import cartAPI from "../apis/cart";
 import { Toast } from "../utils/helpers";
+import { mapState } from "vuex";
 export default {
   components: {
     Menu
@@ -108,6 +128,9 @@ export default {
   data() {
     return {
       user: [],
+      userName: "",
+      address: "",
+      phone: "",
       catName: "",
       selected1: null,
       gender: [
@@ -159,12 +182,22 @@ export default {
         { value: 18, text: "18kg" },
         { value: 19, text: "19kg" },
         { value: 20, text: "20kg" }
-      ]
+      ],
+      isAddress: false
     };
   },
   created() {
     const { id } = this.$route.params;
     this.fetchProfile(id);
+  },
+  beforeRouteUpdate(to, from, next) {
+    // 路由改變時重新抓取資料
+    const { id } = to.params;
+    this.fetchProfile(id);
+    next();
+  },
+  computed: {
+    ...mapState(["currentUser", "isAuthenticated"])
   },
   methods: {
     async fetchProfile(id) {
@@ -240,6 +273,79 @@ export default {
         Toast.fire({
           icon: "error",
           title: "無法取得會員資料，請稍後再試"
+        });
+      }
+    },
+    showInfo() {
+      this.isAddress = false;
+    },
+    showAddress() {
+      this.isAddress = true;
+    },
+    async putUser() {
+      try {
+        let phoneNumber = 0;
+        phoneNumber = parseInt(this.phone);
+
+        if (
+          this.phone.length == 0 ||
+          this.userName.length == 0 ||
+          this.address.length == 0
+        ) {
+          Toast.fire({
+            icon: "error",
+            title: "所有欄位都是必填!"
+          });
+          return;
+        }
+
+        if (this.phone.length !== 10 || isNaN(phoneNumber)) {
+          Toast.fire({
+            icon: "error",
+            title: "電話欄只能輸入長度為10的數字!"
+          });
+          return;
+        }
+
+        const { data, statusText } = await userAPI.put({
+          name: this.userName,
+          phone: this.phone,
+          address: this.address
+        });
+        if (statusText !== "OK" || data.status !== "success") {
+          throw new Error(statusText);
+        }
+        Toast.fire({
+          icon: "success",
+          title: `${data.message}`
+        });
+        this.$router.push("/cats");
+      } catch {
+        Toast.fire({
+          icon: "error",
+          title: "修改失敗，請稍後再試"
+        });
+      }
+    },
+    async logOut() {
+      this.$store.commit("revokeAuthentication");
+      Toast.fire({
+        icon: "success",
+        title: "成功登出!為了給您最佳的服務，建議登入會員唷。"
+      });
+      this.$router.push("/cats");
+    },
+    async goOrder(UserId) {
+      try {
+        const { statusText } = await cartAPI.orders.getOrders(UserId);
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+        this.$router.push("/orders");
+      } catch {
+        Toast.fire({
+          icon: "error",
+          title: "目前無法查看訂單，請稍後再試"
         });
       }
     }
