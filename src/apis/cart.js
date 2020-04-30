@@ -5,6 +5,11 @@ export default {
     getCart(id) {
       return apiHelper.get(`/cart/${id}`);
     },
+    getCheckoutCart(id) {
+      return apiHelper.get(`/checkout/${id}`, {
+        headers: { Authorization: `Bearer ${getToken()}` },
+      });
+    },
     postCart(data) {
       return apiHelper.post("/cart", { ...data });
     },

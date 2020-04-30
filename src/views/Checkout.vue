@@ -5,15 +5,15 @@
       <div class="input-group mb-3">
         <div class="col-12">
           姓名:
-          <input v-model="name" type="text" class="form-control" placeholder="姓名" />
+          <input v-model="name" type="text" class="form-control" />
         </div>
         <div class="col-12">
           電話:
-          <input v-model="phone" type="text" class="form-control" placeholder="電話" />
+          <input v-model="phone" type="number" class="form-control" />
         </div>
         <div class="col-12">
           地址:
-          <input v-model="address" type="text" class="form-control" placeholder="地址" />
+          <input v-model="address" type="text" class="form-control" />
         </div>
       </div>
       <div class="col-12 shadow p-3 mb-5 mx-0 bg-white rounded row">
@@ -22,55 +22,68 @@
         <div v-if="this.nowPrice>666" class="col-3">已達免運標準，現省80$</div>
       </div>
       <div class="col-12">確認訂單內容是否正確</div>
-      <div class="col-12 row mt-3 border-bottom" v-for="product in products" :key="product.id">
-        <div class="col-3">
-          <img src="https://via.placeholder.com/150" />
-        </div>
-        <div class="col-5">
-          <h3>{{product.name}}</h3>
-          <h4>{{product.specification}}</h4>
-        </div>
-        <div class="col-2">
-          <div class="col-12 inline">
-            單價 :
-            <font-awesome-icon icon="dollar-sign" size="2x" />
-            {{product.price}}
+      <div v-if="this.products.length !== 0" class="col-12">
+        <div class="col-12 row mt-3 border-bottom" v-for="product in products" :key="product.id">
+          <div class="col-3">
+            <img src="https://via.placeholder.com/150" />
           </div>
-          <div class="col-12">
-            <div class="input-group">
-              數量 :
-              <button
-                type="button"
-                class="btn btn-link pr-0 pt-0 mt-0"
-                @click="MinusProduct(product.id)"
-              >
-                <font-awesome-icon :icon="['far','minus-square']" style="color:black" size="2x" />
-              </button>
-              {{product.CartItem.quantity}}
-              <button
-                type="button"
-                class="btn btn-link pl-0 pt-0 mt-0"
-                @click="PlusProduct(product.id)"
-              >
-                <font-awesome-icon :icon="['far','plus-square']" style="color:black" size="2x" />
-              </button>
+          <div class="col-5">
+            <h3>{{product.name}}</h3>
+            <h4>{{product.specification}}</h4>
+          </div>
+          <div class="col-2">
+            <div class="col-12 inline">
+              單價 :
+              <font-awesome-icon icon="dollar-sign" size="2x" />
+              {{product.price}}
+            </div>
+            <div class="col-12">
+              <div class="input-group">
+                數量 :
+                <button
+                  type="button"
+                  class="btn btn-link pr-0 pt-0 mt-0"
+                  @click="MinusProduct(product.id)"
+                >
+                  <font-awesome-icon :icon="['far','minus-square']" style="color:black" size="2x" />
+                </button>
+                {{product.CartItem.quantity}}
+                <button
+                  type="button"
+                  class="btn btn-link pl-0 pt-0 mt-0"
+                  @click="PlusProduct(product.id)"
+                >
+                  <font-awesome-icon :icon="['far','plus-square']" style="color:black" size="2x" />
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-2">
-          <button type="button" class="btn btn-link pl-0 pt-0 mt-0" @click="DeleteItem(product.id)">
-            <font-awesome-icon :icon="['fas','times-circle']" style="color:red" size="2x" />
-          </button>
+          <div class="col-2">
+            <button
+              type="button"
+              class="btn btn-link pl-0 pt-0 mt-0"
+              @click="DeleteItem(product.id)"
+            >
+              <font-awesome-icon :icon="['fas','times-circle']" style="color:red" size="2x" />
+            </button>
+          </div>
         </div>
       </div>
+      <div v-else class="col-12">購物車內還沒有商品唷!</div>
+      <div class="col-12"></div>
       <div class="col-4"></div>
       <div class="col-4 text-right">
         <h4>小計 :{{nowPrice}}</h4>
         <h4>運費 :{{shipping}}</h4>
         <h3>總計 :{{totalPrice}}</h3>
       </div>
-      <div class="col-4 mt-3">
+      <div v-if="this.products.length !== 0" class="col-4 mt-3">
         <b-button variant="danger" @click="postOrder(currentUser.id)">提交訂單</b-button>
+      </div>
+      <div v-else class="col-4 text-center">
+        <router-link :to="{name:'cats'}">
+          <b-button variant="danger" style="width:50%;">來去逛逛</b-button>
+        </router-link>
       </div>
     </div>
 
@@ -94,22 +107,26 @@ export default {
     };
   },
   created() {
-    this.fetchCart();
+    this.fetchCheckoutCart();
   },
   computed: {
     ...mapState(["currentUser", "isAuthenticated"])
   },
   methods: {
-    async fetchCart() {
+    async fetchCheckoutCart() {
       try {
-        const { data, statusText } = await cartAPI.carts.getCart(
+        const { data, statusText } = await cartAPI.carts.getCheckoutCart(
           localStorage.getItem("cartId")
         );
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
+
         this.products = data.cart.items;
         this.nowPrice = data.totalPrice;
+        this.name = data.user.name;
+        this.phone = data.user.phone;
+        this.address = data.user.address;
         if (666 < this.nowPrice) {
           this.totalPrice = this.nowPrice;
         } else {
@@ -184,6 +201,8 @@ export default {
             if (statusText !== "OK") {
               throw new Error(statusText);
             }
+            this.totalPrice = this.totalPrice - this.products[i].price;
+            this.nowPrice = this.nowPrice - this.products[i].price;
             this.products = this.products.filter(
               product => product.CartItem.id !== deleteTargetId
             );
@@ -198,7 +217,28 @@ export default {
     },
     async postOrder(id) {
       try {
-        const { statusText } = await cartAPI.orders.postOrder({
+        let phoneNumber = 0;
+        phoneNumber = parseInt(this.phone);
+        if (
+          this.phone.length == 0 ||
+          this.name.length == 0 ||
+          this.address.length == 0
+        ) {
+          Toast.fire({
+            icon: "error",
+            title: "所有欄位都是必填!"
+          });
+          return;
+        }
+        if (this.phone.length !== 10 || isNaN(phoneNumber)) {
+          Toast.fire({
+            icon: "error",
+            title: "電話欄只能輸入長度為10的數字!"
+          });
+          return;
+        }
+        //檢查完欄位後，送出訂單
+        const { data, statusText } = await cartAPI.orders.postOrder({
           cartId: localStorage.getItem("cartId"),
           userId: id,
           name: this.name,
@@ -206,10 +246,15 @@ export default {
           address: this.address,
           amount: this.totalPrice
         });
-        if (statusText !== "OK") {
+        console.log(data);
+        if (statusText !== "OK" || data.status == "error") {
           throw new Error(statusText);
         }
         localStorage.removeItem("cartId");
+        Toast.fire({
+          icon: "success",
+          title: "成功新增訂單!"
+        });
         this.$router.push("/orders");
       } catch {
         Toast.fire({
