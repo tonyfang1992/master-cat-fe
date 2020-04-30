@@ -16,6 +16,11 @@ export default {
       headers: { Authorization: `Bearer ${getToken()}` },
     });
   },
+  getOrder() {
+    return apiHelper.get("/admin/orders", {
+      headers: { Authorization: `Bearer ${getToken()}` },
+    });
+  },
   createProduct({ formData }) {
     return apiHelper.post("/admin/NewProduct", formData, {
       headers: { Authorization: `Bearer ${getToken()}` },
@@ -33,6 +38,11 @@ export default {
   },
   createFeedorCan({ formData }) {
     return apiHelper.post("/admin/FeedorCan", formData, {
+      headers: { Authorization: `Bearer ${getToken()}` },
+    });
+  },
+  deleteOrder(id) {
+    return apiHelper.delete(`/admin/orders/${id}`, {
       headers: { Authorization: `Bearer ${getToken()}` },
     });
   },

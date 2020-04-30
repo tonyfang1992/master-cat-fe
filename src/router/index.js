@@ -172,6 +172,12 @@ const router = new Router({
       beforeEnter: authorizeIsAdmin,
     },
     {
+      path: "/admin/order",
+      name: "AdminGetOrder",
+      component: () => import("../views/AdminGetOrder.vue"),
+      beforeEnter: authorizeIsAdmin,
+    },
+    {
       path: "*",
       name: "not-found",
       component: NotFound,
