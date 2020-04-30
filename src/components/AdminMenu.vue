@@ -18,7 +18,7 @@ const Menu = {
     { id: "6", name: "新增飼料、罐頭", router: "AdminCreateFeed" },
     { id: "3", name: "庫存、銷售、修改商品資訊", router: "AdminGetStore" },
     { id: "4", name: "查看訂單", router: "AdminGetOrder" },
-    { id: "5", name: "會員管理", router: "AdminCreateProduct" }
+    { id: "5", name: "會員管理", router: "AdminGetUser" }
   ]
 };
 export default {
