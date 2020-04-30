@@ -15,7 +15,7 @@ const Menu = {
   AdminMenu: [
     { id: "1", name: "新增商品", router: "AdminCreateProduct" },
     { id: "2", name: "新增活動、分類", router: "AdminCreateActivity" },
-    { id: "3", name: "庫存、銷售", router: "AdminGetStore" },
+    { id: "3", name: "庫存、銷售、修改商品資訊", router: "AdminGetStore" },
     { id: "4", name: "查看訂單", router: "AdminCreateProduct" },
     { id: "5", name: "會員管理", router: "AdminCreateProduct" }
   ]

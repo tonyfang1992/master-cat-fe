@@ -22,7 +22,13 @@
           :dark="dark"
           sort-icon-left
           responsive="sm"
-        ></b-table>
+        >
+          <template v-slot:cell(修改商品)="row">
+            <router-link :to="{name:'AdminEditProduct', params:{id:row.item.id}}">
+              <b-button size="sm" class="mr-2">修改商品</b-button>
+            </router-link>
+          </template>
+        </b-table>
       </div>
     </div>
     <div class="col-1 mt-5"></div>
@@ -46,7 +52,7 @@ export default {
         { key: "name", sortable: true },
         { key: "amount", sortable: true },
         { key: "SaleAmount", sortable: true },
-        { key: "sortDesc", sortable: false }
+        { key: "修改商品", sortable: false }
       ],
       items: [],
       hover: true,

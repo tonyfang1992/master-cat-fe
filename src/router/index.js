@@ -148,6 +148,12 @@ const router = new Router({
       beforeEnter: authorizeIsAdmin,
     },
     {
+      path: "/admin/EditProduct/:id",
+      name: "AdminEditProduct",
+      component: () => import("../views/AdminEditProduct.vue"),
+      beforeEnter: authorizeIsAdmin,
+    },
+    {
       path: "/admin/NewActivity",
       name: "AdminCreateActivity",
       component: () => import("../views/AdminCreateActivity.vue"),

@@ -260,6 +260,7 @@ export default {
   },
   data() {
     return {
+      ProductId: "",
       Categories: [],
       SubCategories: [],
       ThisWeekActivities: [],
@@ -291,16 +292,25 @@ export default {
     };
   },
   created() {
-    this.fetchCreateProduct();
+    const { id } = this.$route.params;
+    this.fetchEditProduct(id);
+  },
+  beforeRouteUpdate(to, from, next) {
+    // 路由改變時重新抓取資料
+    const { id } = to.params;
+    this.fetchEditProduct(id);
+    next();
   },
   methods: {
-    async fetchCreateProduct() {
+    async fetchEditProduct(id) {
       try {
-        const { data, statusText } = await adminAPI.getCreateProduct();
+        this.ProductId = id;
+        const { data, statusText } = await adminAPI.getEditProduct(id);
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
         console.log(data);
+        this.product = data.product;
         this.Categories = data.Categories;
         this.SubCategories = data.SubCategories;
         this.ThisWeekActivities = data.ThisWeekActivities;
@@ -327,17 +337,18 @@ export default {
     },
     async handleSubmit(data) {
       try {
+        const targetProductId = this.ProductId;
         const form = data.target;
         const formData = new FormData(form);
-        console.log(formData);
-        console.log(data);
-        for (let [name, value] of formData.entries()) {
-          console.log(name + ": " + value);
-        }
-        const { statusText } = await adminAPI.createProduct({ formData });
+        const { statusText } = await adminAPI.editProduct({
+          formData,
+          targetProductId
+        });
+
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
+
         this.$router.push({ name: "cats" });
       } catch {
         Toast.fire({
