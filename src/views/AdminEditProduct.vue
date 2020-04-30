@@ -309,7 +309,6 @@ export default {
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
-        console.log(data);
         this.product = data.product;
         this.Categories = data.Categories;
         this.SubCategories = data.SubCategories;

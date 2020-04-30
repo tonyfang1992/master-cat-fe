@@ -66,7 +66,6 @@ export default {
 
         this.order = data.order;
         this.tradeInfo = data.tradeInfo;
-        console.log(this.tradeInfo);
       } catch {
         Toast.fire({
           icon: "error",

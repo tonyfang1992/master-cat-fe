@@ -150,7 +150,6 @@ export default {
               if (statusText !== "OK") {
                 throw new Error(statusText);
               }
-              console.log(this.products[i].CartItem.id);
               console.log(data);
               this.products[i].CartItem.quantity -= 1;
               this.nowPrice -= this.products[i].price;
@@ -246,7 +245,6 @@ export default {
           address: this.address,
           amount: this.totalPrice
         });
-        console.log(data);
         if (statusText !== "OK" || data.status == "error") {
           throw new Error(statusText);
         }

@@ -300,7 +300,6 @@ export default {
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
-        console.log(data);
         this.Categories = data.Categories;
         this.SubCategories = data.SubCategories;
         this.ThisWeekActivities = data.ThisWeekActivities;
