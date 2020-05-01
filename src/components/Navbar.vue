@@ -48,7 +48,7 @@
             <font-awesome-icon icon="paw" size="10x" />
           </div>
         </b-sidebar>
-        <router-link to="#" class="text-dark mr-3">
+        <router-link :to="{name:'search'}" class="text-dark mr-3">
           <i class="pv3 ph2 ma0 link grow">
             <font-awesome-icon icon="search" size="2x" />
           </i>

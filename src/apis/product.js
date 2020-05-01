@@ -14,5 +14,8 @@ export default {
     getHotProducts() {
       return apiHelper.get("/products/hot");
     },
+    getSearch(data) {
+      return apiHelper.post("/search", { ...data });
+    },
   },
 };
