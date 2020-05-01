@@ -44,7 +44,7 @@ export default {
   },
   data() {
     return {
-      sortBy: "age",
+      sortBy: "id",
       sortDesc: false,
       fields: [
         { key: "id", sortable: true },
@@ -61,10 +61,10 @@ export default {
     };
   },
   created() {
-    this.fetchCreateProduct();
+    this.fetchStore();
   },
   methods: {
-    async fetchCreateProduct() {
+    async fetchStore() {
       try {
         const { data, statusText } = await adminAPI.getStore();
         if (statusText !== "OK") {

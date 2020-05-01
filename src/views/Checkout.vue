@@ -74,7 +74,8 @@
       <div class="col-4"></div>
       <div class="col-4 text-right">
         <h4>小計 :{{nowPrice}}</h4>
-        <h4>運費 :{{shipping}}</h4>
+        <h4 v-if="this.nowPrice<666">運費 :{{shipping}}</h4>
+        <h4 v-else>運費 :免運費!</h4>
         <h3>總計 :{{totalPrice}}</h3>
       </div>
       <div v-if="this.products.length !== 0" class="col-4 mt-3">
@@ -168,17 +169,24 @@ export default {
       try {
         for (let i = 0; i < this.products.length; i++) {
           if (this.products[i].id == id) {
-            if (this.products[i].CartItem.quantity < 9) {
-              const { data, statusText } = await cartAPI.carts.addCartItem(
-                this.products[i].CartItem.id
-              );
-              if (statusText !== "OK") {
-                throw new Error(statusText);
+            if (this.products[i].CartItem.quantity < this.products[i].amount) {
+              if (this.products[i].CartItem.quantity < 9) {
+                const { data, statusText } = await cartAPI.carts.addCartItem(
+                  this.products[i].CartItem.id
+                );
+                if (statusText !== "OK") {
+                  throw new Error(statusText);
+                }
+                console.log(data);
+                this.products[i].CartItem.quantity += 1;
+                this.nowPrice += this.products[i].price;
+                this.totalPrice = this.nowPrice + this.shipping;
               }
-              console.log(data);
-              this.products[i].CartItem.quantity += 1;
-              this.nowPrice += this.products[i].price;
-              this.totalPrice = this.nowPrice + this.shipping;
+            } else {
+              Toast.fire({
+                icon: "warning",
+                title: "庫存不足，不能再多買拉!"
+              });
             }
           }
         }

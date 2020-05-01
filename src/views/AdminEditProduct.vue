@@ -323,7 +323,7 @@ export default {
       } catch {
         Toast.fire({
           icon: "error",
-          title: "無法取得會員資料，請稍後再試"
+          title: "無法取得商品資料，請稍後再試"
         });
       }
     },
@@ -347,8 +347,11 @@ export default {
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
-
-        this.$router.push({ name: "cats" });
+        Toast.fire({
+          icon: "success",
+          title: "成功修改商品資訊"
+        });
+        this.$router.push({ name: "AdminGetStore" });
       } catch {
         Toast.fire({
           icon: "error",

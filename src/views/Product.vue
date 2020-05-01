@@ -15,11 +15,11 @@
         <div class="div mt-2">
           <h6>{{product.description}}</h6>
         </div>
-        <div class="div mt-2">折扣 : {{product.discount}} 折</div>
+        <!-- <div class="div mt-2">折扣 : {{product.discount}} 折</div> -->
         <div class="div mt-2">價格 : {{product.price}} 元</div>
         <div class="div mt-2">庫存 : {{product.amount}} 件</div>
         <div class="col-12 row mt-3">
-          <div class="input-group mb-3 col-6">
+          <div v-if="product.amount !== 0" class="input-group mb-3 col-6">
             數量 :
             <button type="button" class="btn btn-link pr-0 pt-0 mt-0" @click="MinusProduct">
               <font-awesome-icon :icon="['far','minus-square']" style="color:black" size="2x" />
@@ -33,7 +33,7 @@
               <font-awesome-icon :icon="['far','plus-square']" style="color:black" size="2x" />
             </button>
           </div>
-          <div class="col-6">
+          <div v-if="product.amount !== 0" class="col-6">
             <button
               type="button"
               class="btn btn-info"
@@ -41,6 +41,9 @@
               postCart({ product: product.name, productId: product.id })
             "
             >加入購物車</button>
+          </div>
+          <div v-else class="col-12">
+            <h1 style="color:red;">慢了一步 完售!</h1>
           </div>
         </div>
       </div>
@@ -139,8 +142,15 @@ export default {
       }
     },
     PlusProduct() {
-      if (this.count < 9) {
-        this.count += 1;
+      if (this.count < this.product.amount) {
+        if (this.count < 9) {
+          this.count += 1;
+        }
+      } else {
+        Toast.fire({
+          icon: "warning",
+          title: "庫存不夠啦! 只有這麼多了"
+        });
       }
     }
   }

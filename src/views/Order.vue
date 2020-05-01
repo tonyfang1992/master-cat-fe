@@ -19,8 +19,19 @@
           </div>
         </div>
         <div class="col-2 word">
-          <h6>運費:80 (滿666免運)</h6>
-          <h3>總計 :{{order.amount}}</h3>
+          <h6 v-if="order.amount<666">運費:80 (滿666免運)</h6>
+          <h4 v-else>運費 : 免運費!</h4>
+          <div v-if="currentUser.rank == '一般會員'">
+            <h3>總計 :{{order.amount}}</h3>
+          </div>
+          <div v-if="currentUser.rank == '黃金會員'">
+            <b-badge variant="warning">黃金會員 :再享75折</b-badge>
+            <h3>總計 :{{Math.floor(order.amount*0.75)}}</h3>
+          </div>
+          <div v-if="currentUser.rank == '白銀會員'">
+            <b-badge variant="warning">白銀會員 :再享85折</b-badge>
+            <h3>總計 :{{Math.floor(order.amount*0.85)}}</h3>
+          </div>
         </div>
         <div v-if="order.payment_status == '完成付款'" class="col-2">
           <font-awesome-icon :icon="['far','check-circle']" class="pay" size="2x" />已付款
@@ -58,8 +69,7 @@ import { Toast } from "../utils/helpers.js";
 export default {
   data() {
     return {
-      orders: [],
-      totalPrice: 0
+      orders: []
     };
   },
   created() {
@@ -77,6 +87,7 @@ export default {
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
+
         this.orders = data.orders;
       } catch {
         Toast.fire({

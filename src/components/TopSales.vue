@@ -65,7 +65,7 @@
             type="button"
             class="btn btn-link pl-0 pt-0 mt-0"
             @click="
-              postCart({ product: TopProduct.name, productId: TopProduct.id })
+              postCart({ product: TopProduct.name, productId: TopProduct.id, amount: TopProduct.amount })
             "
           >
             <font-awesome-icon icon="shopping-cart" size="1x" />
@@ -142,6 +142,13 @@ export default {
   methods: {
     async postCart(product) {
       try {
+        if (product.amount < 1) {
+          Toast.fire({
+            icon: "warning",
+            title: "已經完售了QQ"
+          });
+          return;
+        }
         if (localStorage.getItem("cartId") == null) {
           localStorage.setItem("cartId", uuidv4());
         }

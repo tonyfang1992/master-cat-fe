@@ -35,24 +35,14 @@
           <h3 class="mt-3 word">新品到貨</h3>
         </router-link>
       </div>
-      <div class="col-3 column text-center">
-        <router-link to="#" class="mr-5">
-          <img src="@/assets/feed1.png" alt />
-          <h3 class="mt-3 word">飼料優惠</h3>
-        </router-link>
-      </div>
+
       <div class="col-3 column text-center">
         <router-link :to="{name:'HotProduct'}" class="mr-5">
           <img src="@/assets/hot1.png" alt />
           <h3 class="mt-3 word">熱銷商品</h3>
         </router-link>
       </div>
-      <div class="col-3 column text-center">
-        <router-link to="#" class="mr-5">
-          <img src="@/assets/over1.png" alt />
-          <h3 class="mt-3 word">絕版出清</h3>
-        </router-link>
-      </div>
+
       <div class="col-12">
         <img src="@/assets/1.png" width="100%" height="100%" />
       </div>
