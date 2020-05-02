@@ -101,7 +101,7 @@
     <div class="forMobile col-12 row">
       <div
         v-show="showHot"
-        class="col-6 column text-center mt-2"
+        class="col-6 column text-center mt-2 ml-0 mr-0"
         v-for="TopProduct in TopProductsAfter"
         :key="'A' + TopProduct.id"
       >

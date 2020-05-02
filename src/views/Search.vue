@@ -1,10 +1,25 @@
 <template>
   <div class="inner row">
     <div class="col-1 mt-5"></div>
-    <div class="col-3 mt-5">
+    <div class="Menu col-3 mt-5">
       <Menu />
     </div>
-    <div class="col-7 mt-5">
+    <div class="forComputer container col-7 mt-5">
+      <div class="col-8">
+        <b-input-group>
+          <b-form-input v-model="search" placeholder="搜尋商品"></b-form-input>
+          <b-input-group-append>
+            <b-button variant="outline-secondary" @click="searchProducts()">搜尋</b-button>
+          </b-input-group-append>
+        </b-input-group>
+      </div>
+      <div class="col-4"></div>
+      <div class="col-12 mt-3">
+        搜尋結果 :
+        <TopSales :TopProducts="TopProducts" :NewProducts="NewProducts" />
+      </div>
+    </div>
+    <div class="forMobile container col-12 mt-5">
       <div class="col-8">
         <b-input-group>
           <b-form-input v-model="search" placeholder="搜尋商品"></b-form-input>
@@ -74,3 +89,25 @@ export default {
   }
 };
 </script>
+<style scoped>
+.forMobile {
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .Menu {
+    display: none;
+  }
+  .forComputer {
+    display: none;
+  }
+  .forMobile {
+    display: contents;
+  }
+  .col-2 {
+    display: none;
+  }
+  .col-1 {
+    display: none;
+  }
+}
+</style>

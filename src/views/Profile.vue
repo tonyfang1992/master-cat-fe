@@ -1,10 +1,10 @@
 <template>
   <div class="inner row">
     <div class="col-1 mt-5"></div>
-    <div class="col-3 mt-5">
+    <div class="Menu col-3 mt-5">
       <Menu />
     </div>
-    <div class="col-7 row mt-5">
+    <div class="forComputer container col-7 row mt-5">
       <div class="col-6">
         <div class="col-12 row mx-0" style="background-color:pink; height:250px;">
           <div v-if="isAddress" class="col-12">
@@ -83,6 +83,113 @@
         </div>
       </div>
       <div v-if="user.Cats.length == 0" class="col-6">
+        <div class="col-12 row align-items-center border border-dark">
+          <div class="col-6 my-3">
+            <b-form-input v-model="catName" placeholder="喵大名字"></b-form-input>
+          </div>
+          <div class="col-6 my-3">
+            <img src="https://via.placeholder.com/150" />
+          </div>
+        </div>
+        <div class="col-12">
+          <div>
+            性別 :
+            <b-form-radio-group v-model="selected1" :options="gender" name="radio-inline"></b-form-radio-group>
+          </div>
+
+          <div>
+            年齡 :
+            <b-form-select v-model="selected2" :options="age"></b-form-select>
+          </div>
+          <div>
+            體重 :
+            <b-form-select v-model="selected3" :options="weight"></b-form-select>
+          </div>
+        </div>
+        <div class="mt-5 text-center">
+          <button class="mr-3" @click="postCat()">登錄</button>
+        </div>
+      </div>
+    </div>
+    <div class="forMobile container col-12 mt-5 column">
+      <div class="col-12">
+        <div class="col-12 row mx-0" style="background-color:pink; height:250px;">
+          <div v-if="isAddress" class="col-12">
+            <div>
+              姓名 : {{user.name}}
+              <b-form-input v-model="userName"></b-form-input>
+            </div>
+
+            <div>
+              電話 : {{user.phone}}
+              <b-form-input v-model="phone"></b-form-input>
+            </div>
+            <div>
+              地址 :{{user.address}}
+              <b-form-input v-model="address"></b-form-input>
+            </div>
+            <button class="btn btn-primary" @click="putUser()">送出修改</button>
+          </div>
+          <div v-else class="col-12 row">
+            <div class="col-6 row align-items-center">
+              <h3>hi, {{ user.name }}</h3>
+              <h3>{{ user.rank }}</h3>
+            </div>
+            <div class="col-6 row align-items-center">
+              <h3>$ {{ user.spendMoney }}</h3>
+              <h3>累積消費</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <b-list-group>
+            <button class="btn btn-link" @click="showInfo()">
+              <b-list-group-item>會員狀態</b-list-group-item>
+            </button>
+            <button class="btn btn-link" @click="goOrder(currentUser.id)">
+              <b-list-group-item>查詢訂單</b-list-group-item>
+            </button>
+            <button class="btn btn-link" @click="showAddress()">
+              <b-list-group-item>常用地址</b-list-group-item>
+            </button>
+            <button class="btn btn-link" @click="logOut()">
+              <b-list-group-item>登出</b-list-group-item>
+            </button>
+          </b-list-group>
+        </div>
+      </div>
+      <div v-if="user.Cats.length !== 0" class="col-12">
+        <div class="col-12 row align-items-center border border-dark">
+          <div class="col-6 my-3">
+            <h3>{{ user.Cats[0].name }}</h3>
+            <h3>年齡 : {{ user.Cats[0].age }}</h3>
+            <h3>性別 : {{ user.Cats[0].gender }}</h3>
+            <h3>體重 : {{ user.Cats[0].weight }}</h3>
+          </div>
+          <div class="col-6 my-3">
+            <img src="https://via.placeholder.com/150" />
+          </div>
+        </div>
+        <div class="col-12">
+          <div>
+            性別 :
+            <b-form-radio-group v-model="selected1" :options="gender" name="radio-inline"></b-form-radio-group>
+          </div>
+
+          <div>
+            年齡 :
+            <b-form-select v-model="selected2" :options="age"></b-form-select>
+          </div>
+          <div>
+            體重 :
+            <b-form-select v-model="selected3" :options="weight"></b-form-select>
+          </div>
+        </div>
+        <div class="mt-5 text-center">
+          <button @click="putCat()">修改</button>
+        </div>
+      </div>
+      <div v-if="user.Cats.length == 0" class="col-12">
         <div class="col-12 row align-items-center border border-dark">
           <div class="col-6 my-3">
             <b-form-input v-model="catName" placeholder="喵大名字"></b-form-input>
@@ -352,3 +459,25 @@ export default {
   }
 };
 </script>
+<style scoped>
+.forMobile {
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .Menu {
+    display: none;
+  }
+  .forComputer {
+    display: none;
+  }
+  .forMobile {
+    display: contents;
+  }
+  .col-2 {
+    display: none;
+  }
+  .col-1 {
+    display: none;
+  }
+}
+</style>

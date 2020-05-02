@@ -27,12 +27,16 @@ export default {
   display: none;
 }
 @media screen and (max-width: 768px) {
+  .main {
+    padding-top: 20px;
+    padding-bottom: 70px;
+  }
   .footer {
     position: fixed;
     bottom: 0%;
     display: inline-flex;
     background-color: #f5b7b1;
-    height: 70px;
+    height: 60px;
   }
 }
 </style>
