@@ -1,9 +1,10 @@
 <template>
   <div id="master-cat">
     <Navbar />
-    <main role="main" class="mt-5 bg-white">
+    <main role="main" class="main mt-5 bg-white">
       <router-view />
     </main>
+    <Footer class="footer" />
   </div>
 </template>
 
@@ -12,10 +13,26 @@ import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 export default {
   name: "App",
   components: {
-    Navbar
+    Navbar,
+    Footer
   }
 };
 </script>
+<style scoped>
+.footer {
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .footer {
+    position: fixed;
+    bottom: 0%;
+    display: inline-flex;
+    background-color: #f5b7b1;
+    height: 70px;
+  }
+}
+</style>

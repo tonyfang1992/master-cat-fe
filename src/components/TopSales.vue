@@ -46,7 +46,7 @@
         >價格</a>
       </li>
     </ul>
-    <div class="col-12 row">
+    <div class="forComputer col-12 row">
       <div
         v-show="showHot"
         class="col-3 column text-center mt-2"
@@ -75,6 +75,58 @@
       <div
         v-show="showNew"
         class="col-3 column text-center mt-2"
+        v-for="NewProduct in NewProductsAfter"
+        :key="'C' + NewProduct.id"
+      >
+        <router-link to="#" class="mr-5">
+          <img :src="NewProduct.image" width="100%" height="150px" />
+        </router-link>
+        <div class="product_name">
+          <h4>{{ NewProduct.name }}</h4>
+        </div>
+        <div class="product_option">
+          <span>${{ NewProduct.price }}</span>
+          <button
+            type="button"
+            class="btn pl-0 pt-0 mt-0"
+            @click="
+              postCart({ product: NewProduct.name, productId: NewProduct.id })
+            "
+          >
+            <font-awesome-icon icon="shopping-cart" size="1x" />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="forMobile col-12 row">
+      <div
+        v-show="showHot"
+        class="col-6 column text-center mt-2"
+        v-for="TopProduct in TopProductsAfter"
+        :key="'A' + TopProduct.id"
+      >
+        <router-link :to="{ name: 'product', params: { id: TopProduct.id } }" class="mr-5">
+          <img :src="TopProduct.image" width="100%" height="150px" />
+        </router-link>
+        <div class="product_name">
+          <h4>{{ TopProduct.name }}</h4>
+        </div>
+        <div class="product_option">
+          <span>${{ TopProduct.price }}</span>
+          <button
+            type="button"
+            class="btn btn-link pl-0 pt-0 mt-0"
+            @click="
+              postCart({ product: TopProduct.name, productId: TopProduct.id, amount: TopProduct.amount })
+            "
+          >
+            <font-awesome-icon icon="shopping-cart" size="1x" />
+          </button>
+        </div>
+      </div>
+      <div
+        v-show="showNew"
+        class="col-6 column text-center mt-2"
         v-for="NewProduct in NewProductsAfter"
         :key="'C' + NewProduct.id"
       >
@@ -211,5 +263,25 @@ export default {
 <style scoped>
 .btn-link {
   color: brown;
+}
+.forMobile {
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .Menu {
+    display: none;
+  }
+  .forComputer {
+    display: none;
+  }
+  .forMobile {
+    display: inline-flex;
+  }
+  .col-2 {
+    display: none;
+  }
+  .col-1 {
+    display: none;
+  }
 }
 </style>

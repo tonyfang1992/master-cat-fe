@@ -15,6 +15,7 @@ import {
   faClipboardList,
   faCaretDown,
   faPaw,
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faMinusSquare,
@@ -38,7 +39,8 @@ library.add(
   faClipboardList,
   faCheckCircle,
   faCaretDown,
-  faPaw
+  faPaw,
+  faBars
 );
 Vue.use(BootstrapVue);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
