@@ -92,7 +92,16 @@
               <font-awesome-icon icon="shopping-cart" size="2x" />
             </i>
           </router-link>
-          <button type="button" class="btn btn-link pl-0 pt-0 mt-0">
+          <router-link
+            v-if="currentUser.role !== 'admin' && currentUser.role !== 'customer'"
+            to="/signin"
+            class="text-dark mr-3"
+          >
+            <i class="pv3 ph2 ma0 link grow">
+              <font-awesome-icon icon="clipboard-list" style="color:black" size="2x" />
+            </i>
+          </router-link>
+          <button v-else type="button" class="btn btn-link pl-0 pt-0 mt-0">
             <i class="pv3 ph2 ma0 link grow" @click="goOrder(currentUser.id)">
               <font-awesome-icon icon="clipboard-list" style="color:black" size="2x" />
             </i>
