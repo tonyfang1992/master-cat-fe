@@ -85,31 +85,31 @@
           </router-link>
         </div>
         <div class="col-3 column text-center">
-          <router-link :to="{ name: 'category', params: { id: 2 } }" class="mr-5">
+          <router-link :to="{ name: 'category', params: { id: 11 } }" class="mr-5">
             <img src="@/assets/catcan.png" width="100%" height="120px" />
             <h3 class="mt-3 word">喵大罐罐</h3>
           </router-link>
         </div>
         <div class="col-3 column text-center">
-          <router-link :to="{ name: 'category', params: { id: 5 } }" class="mr-5">
+          <router-link :to="{ name: 'category', params: { id: 41 } }" class="mr-5">
             <img src="@/assets/toy.png" width="100%" height="120px" />
             <h3 class="mt-3 word">喵大玩具</h3>
           </router-link>
         </div>
         <div class="col-3 column text-center">
-          <router-link :to="{ name: 'category', params: { id: 4 } }" class="mr-5">
+          <router-link :to="{ name: 'category', params: { id: 31 } }" class="mr-5">
             <img src="@/assets/water.png" width="100%" height="120px" />
             <h3 class="mt-3 word">餐桌飲水</h3>
           </router-link>
         </div>
         <div class="col-3 column text-center">
-          <router-link :to="{ name: 'category', params: { id: 6 } }" class="mr-5">
+          <router-link :to="{ name: 'category', params: { id: 51 } }" class="mr-5">
             <img src="@/assets/healthy.png" width="100%" height="120px" />
             <h3 class="mt-3 word">保健護理</h3>
           </router-link>
         </div>
         <div class="col-3 column text-center">
-          <router-link :to="{ name: 'category', params: { id: 3 } }" class="mr-5">
+          <router-link :to="{ name: 'category', params: { id: 21 } }" class="mr-5">
             <img src="@/assets/catfeed-1.png" width="100%" height="120px" />
             <h3 class="mt-3 word">肉乾零食</h3>
           </router-link>
