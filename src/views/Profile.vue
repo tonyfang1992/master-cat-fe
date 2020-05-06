@@ -57,7 +57,7 @@
             <h3>{{ user.Cats[0].name }}</h3>
             <h3>年齡 : {{ user.Cats[0].age }}</h3>
             <h3>性別 : {{ user.Cats[0].gender }}</h3>
-            <h3>體重 : {{ user.Cats[0].weight }}</h3>
+            <h3>體重 : {{ user.Cats[0].weight }}kg</h3>
           </div>
           <div class="col-6 my-3">
             <img src="https://via.placeholder.com/150" />
@@ -345,7 +345,10 @@ export default {
         if (statusText !== "OK" || data.status !== "success") {
           throw new Error(statusText);
         }
-
+        Toast.fire({
+          icon: "success",
+          title: "成功登錄您的愛貓"
+        });
         this.$router.push("/cats");
       } catch {
         Toast.fire({
@@ -374,7 +377,10 @@ export default {
         if (statusText !== "OK" || data.status !== "success") {
           throw new Error(statusText);
         }
-
+        Toast.fire({
+          icon: "success",
+          title: "成功修改愛貓資訊"
+        });
         this.$router.push("/cats");
       } catch {
         Toast.fire({
