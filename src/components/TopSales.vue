@@ -64,7 +64,7 @@
           <button
             type="button"
             class="btn btn-link pl-0 pt-0 mt-0"
-            @click="
+            @click.once="
               postCart({ product: TopProduct.name, productId: TopProduct.id, amount: TopProduct.amount })
             "
           >
@@ -89,7 +89,7 @@
           <button
             type="button"
             class="btn pl-0 pt-0 mt-0"
-            @click="
+            @click.once="
               postCart({ product: NewProduct.name, productId: NewProduct.id })
             "
           >

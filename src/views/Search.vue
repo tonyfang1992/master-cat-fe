@@ -4,6 +4,9 @@
     <div class="Menu col-3 mt-5">
       <Menu />
     </div>
+    <div v-if="isLoading" class="col-12 forComputer">
+      <dot-loader :color="color" :size="size"></dot-loader>
+    </div>
     <div class="forComputer container col-7 mt-5">
       <div class="col-8">
         <b-input-group>
@@ -18,6 +21,9 @@
         搜尋結果 :
         <TopSales :TopProducts="TopProducts" :NewProducts="NewProducts" />
       </div>
+    </div>
+    <div v-if="isLoading" class="col-12 forMobile">
+      <dot-loader :color="color" :size="size"></dot-loader>
     </div>
     <div class="forMobile container col-12 mt-5">
       <div class="col-8">
@@ -41,22 +47,28 @@
 import Menu from "../components/Menu";
 import TopSales from "../components/TopSales";
 import productAPI from "../apis/product";
+import DotLoader from "vue-spinner/src/DotLoader";
 import { Toast } from "../utils/helpers";
 export default {
   components: {
     Menu,
-    TopSales
+    TopSales,
+    DotLoader
   },
   data() {
     return {
       search: "",
       TopProducts: [],
-      NewProducts: []
+      NewProducts: [],
+      isLoading: false,
+      color: "#F5B7B1",
+      size: "200px"
     };
   },
   methods: {
     async searchProducts() {
       try {
+        this.isLoading = true;
         if (this.search.length == 0) {
           Toast.fire({
             icon: "warning",
@@ -79,7 +91,15 @@ export default {
         }
         this.TopProducts = data.TopProducts;
         this.NewProducts = data.NewProducts;
+        if (this.TopProducts.length == 0) {
+          Toast.fire({
+            icon: "warning",
+            title: "找不到相關商品，請輸入少量關鍵字"
+          });
+        }
+        this.isLoading = false;
       } catch {
+        this.isLoading = false;
         Toast.fire({
           icon: "error",
           title: "搜尋錯誤，請稍後再試"

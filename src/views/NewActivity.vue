@@ -4,7 +4,10 @@
     <div class="Menu col-3 mt-5">
       <Menu />
     </div>
-    <div class="forComputer container col-7 mt-5">
+    <div v-if="isLoading" class="col-7 forComputer">
+      <dot-loader :color="color" :size="size"></dot-loader>
+    </div>
+    <div v-else class="forComputer container col-7 mt-5">
       <div class="col-12">
         <img :src="NewActivity.image" width="100%" height="300px" />
         <router-link to="/cats" class="mr-5">
@@ -19,7 +22,10 @@
       <TopSales :TopProducts="NewActivityTopProducts" :NewProducts="NewActivityNewProducts" />
       <TopSales :TopProducts="TopProducts" :NewProducts="NewProducts" />
     </div>
-    <div class="forMobile container col-12 mt-5">
+    <div v-if="isLoading" class="col-12 forMobile">
+      <dot-loader :color="color" :size="size"></dot-loader>
+    </div>
+    <div v-else class="forMobile container col-12 mt-5">
       <div class="col-12">
         <img :src="NewActivity.image" width="100%" height="300px" />
         <router-link to="/cats" class="mr-5">
@@ -42,10 +48,12 @@ import Menu from "../components/Menu";
 import TopSales from "../components/TopSales";
 import categoryAPI from "../apis/category";
 import { Toast } from "../utils/helpers";
+import DotLoader from "vue-spinner/src/DotLoader";
 export default {
   components: {
     Menu,
-    TopSales
+    TopSales,
+    DotLoader
   },
   data() {
     return {
@@ -53,7 +61,10 @@ export default {
       NewProducts: [],
       NewActivityTopProducts: [],
       NewActivityNewProducts: [],
-      NewActivity: {}
+      NewActivity: {},
+      isLoading: true,
+      color: "#F5B7B1",
+      size: "200px"
     };
   },
 
@@ -79,7 +90,9 @@ export default {
         this.NewActivityTopProducts = data.NewActivityTopProducts;
         this.NewActivityNewProducts = data.NewActivityNewProducts;
         this.NewActivity = data.NewActivity;
+        this.isLoading = false;
       } catch {
+        this.isLoading = false;
         Toast.fire({
           icon: "error",
           title: "無法取得該分類商品，請稍後再試"

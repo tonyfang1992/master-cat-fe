@@ -1,7 +1,10 @@
 <template>
   <div class="inner row">
     <div class="col-1"></div>
-    <div class="forComputer container col-10 mt-4">
+    <div v-if="isLoading" class="col-10 forComputer">
+      <dot-loader :color="color" :size="size"></dot-loader>
+    </div>
+    <div v-else class="forComputer container col-10 mt-4">
       <carousel
         :autoplay="true"
         :minSwipeDistance="40"
@@ -23,7 +26,10 @@
         </slide>
       </carousel>
     </div>
-    <div class="forMobile container text-center col-12 mt-4">
+    <div v-if="isLoading" class="col-12 forMobile">
+      <dot-loader :color="color" :size="size"></dot-loader>
+    </div>
+    <div v-else class="forMobile container text-center col-12 mt-4">
       <carousel
         :autoplay="true"
         :minSwipeDistance="40"
@@ -50,7 +56,10 @@
     <div class="Menu container col-3">
       <Menu />
     </div>
-    <div class="forComputer container col-7 row">
+    <div v-if="isLoading" class="col-7 forComputer">
+      <dot-loader :color="color" :size="size"></dot-loader>
+    </div>
+    <div v-else class="forComputer container col-7 row">
       <div class="col-6 column text-center">
         <router-link :to="{name:'NewProduct'}" class="mr-5">
           <img src="@/assets/new1.png" height="100px" alt />
@@ -112,7 +121,10 @@
       </div>
       <TopSales :TopProducts="TopProducts" :NewProducts="NewProducts" />
     </div>
-    <div class="forMobile container col-12 row">
+    <div v-if="isLoading" class="col-12 forMobile">
+      <dot-loader :color="color" :size="size"></dot-loader>
+    </div>
+    <div v-else class="forMobile container col-12 row">
       <div class="col-6 column text-center mr-0">
         <router-link :to="{name:'NewProduct'}">
           <img src="@/assets/new1.png" height="100px" alt />
@@ -183,17 +195,22 @@ import Menu from "../components/Menu";
 import TopSales from "../components/TopSales";
 import productAPI from "../apis/product";
 import { Toast } from "../utils/helpers";
+import DotLoader from "vue-spinner/src/DotLoader";
 export default {
   components: {
     Carousel,
     Slide,
     Menu,
-    TopSales
+    TopSales,
+    DotLoader
   },
   data() {
     return {
       TopProducts: [],
-      NewProducts: []
+      NewProducts: [],
+      isLoading: true,
+      color: "#F5B7B1",
+      size: "200px"
     };
   },
   created() {
@@ -209,7 +226,9 @@ export default {
 
         this.TopProducts = data.TopProducts;
         this.NewProducts = data.NewProducts;
+        this.isLoading = false;
       } catch {
+        this.isLoading = false;
         Toast.fire({
           icon: "error",
           title: "無法取得該熱銷商品，請稍後再試"
