@@ -117,22 +117,21 @@ import { Toast } from "../utils/helpers";
 const dummyData = {
   feedCategories: [
     { id: "1", name: "肉泥 / 化毛膏" },
-    { id: "27", name: "副食 / 餐包 / 餐盒" },
-    { id: "2", name: "貓草 / 薄荷 / 木天蓼" },
-    { id: "3", name: "魚乾 / 魚條 / 肉鬆" }
+    { id: "11", name: "貓草 / 薄荷 / 木天蓼" },
+    { id: "21", name: "魚乾 / 魚條 / 肉鬆" }
   ],
   cleanCategories: [
-    { id: "4", name: "貓砂 / 貓砂盆 / 尿布墊" },
-    { id: "5", name: "洗沐 / 美容 / 清潔修剪" },
-    { id: "6", name: "環境清潔 / 消臭 / 驅蟲" }
+    { id: "31", name: "貓砂 / 貓砂盆 / 尿布墊" },
+    { id: "41", name: "洗沐 / 美容 / 清潔修剪" },
+    { id: "51", name: "環境清潔 / 消臭 / 驅蟲" }
   ],
   otherCategories: [
-    { id: "8", name: "汪喵保健食品" },
-    { id: "9", name: "貓抓板 / 紙屋 / 跳台" },
-    { id: "10", name: "餐桌 / 餐碗 / 飲水機" },
-    { id: "11", name: "逗貓棒 / 貓草玩具" },
-    { id: "12", name: "啃咬 /拉扯 / 陪伴玩具" },
-    { id: "13", name: "外出箱包 / 胸背 / 牽繩 / 水壺" }
+    { id: "71", name: "汪喵保健食品" },
+    { id: "81", name: "貓抓板 / 紙屋 / 跳台" },
+    { id: "91", name: "餐桌 / 餐碗 / 飲水機" },
+    { id: "101", name: "逗貓棒 / 貓草玩具" },
+    { id: "111", name: "啃咬 /拉扯 / 陪伴玩具" },
+    { id: "121", name: "外出箱包 / 胸背 / 牽繩 / 水壺" }
   ]
 };
 export default {
