@@ -50,7 +50,7 @@
             <option v-for="Can in Cans" :key="Can.id" :value="Can.id">{{ Can.brand }}</option>
           </select>
         </div>
-        <div v-if="product.CategoryId == 2" class="form-group">
+        <div v-if="product.CategoryId == 11" class="form-group">
           <label for="CanType">罐頭分類</label>
           <select
             id="CanType"
@@ -110,7 +110,7 @@
           </select>
         </div>
 
-        <div v-if="product.CategoryId !== 1&&product.CategoryId!==2" class="form-group">
+        <div v-if="product.CategoryId !== 1&&product.CategoryId!==11" class="form-group">
           <label for="SubCategory">細項分類</label>
           <select
             id="SubCategory"
