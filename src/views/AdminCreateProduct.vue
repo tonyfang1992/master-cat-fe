@@ -43,7 +43,7 @@
           </select>
         </div>
 
-        <div v-if="product.CategoryId == 2" class="form-group">
+        <div v-if="product.CategoryId == 11" class="form-group">
           <label for="Can">罐頭品牌</label>
           <select id="Can" v-model="product.CanId" class="form-control" name="Can" required>
             <option value selected disabled>--請選擇--</option>
