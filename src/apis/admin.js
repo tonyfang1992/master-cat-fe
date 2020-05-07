@@ -36,6 +36,11 @@ export default {
       headers: { Authorization: `Bearer ${getToken()}` },
     });
   },
+  changeLaunched(id) {
+    return apiHelper.put(`/admin/productLaunched/${id}`, {
+      headers: { Authorization: `Bearer ${getToken()}` },
+    });
+  },
   createActivity({ formData }) {
     return apiHelper.post("/admin/NewActivity", formData, {
       headers: { Authorization: `Bearer ${getToken()}` },

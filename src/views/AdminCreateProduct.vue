@@ -225,6 +225,10 @@
           />
         </div>
 
+        <div>
+          <b-form-radio-group id="launched" v-model="selected1" :options="launched" name="launched"></b-form-radio-group>
+        </div>
+
         <div class="form-group">
           <label for="image">Image</label>
           <img
@@ -287,6 +291,11 @@ export default {
         NewActivityId: "",
         ThisWeekActivityId: ""
       },
+      selected1: null,
+      launched: [
+        { text: "上架", value: true },
+        { text: "待上架", value: false }
+      ],
       isLoading: true
     };
   },

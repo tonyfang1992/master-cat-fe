@@ -225,6 +225,15 @@
           />
         </div>
 
+        <div>
+          <b-form-radio-group
+            id="launched"
+            v-model="product.launched"
+            :options="launched"
+            name="launched"
+          ></b-form-radio-group>
+        </div>
+
         <div class="form-group">
           <label for="image">Image</label>
           <img
@@ -270,6 +279,10 @@ export default {
       Feeds: [],
       FeedAges: [],
       FeedFunctions: [],
+      launched: [
+        { text: "上架", value: true },
+        { text: "待上架", value: false }
+      ],
       product: {
         name: "",
         description: "",

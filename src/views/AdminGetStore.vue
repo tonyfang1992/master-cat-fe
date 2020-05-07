@@ -28,6 +28,9 @@
               <b-button size="sm" class="mr-2">修改商品</b-button>
             </router-link>
           </template>
+          <template v-slot:cell(上、下架商品)="row">
+            <b-button size="sm" class="mr-2" @click="changeLaunched(row.item.id)">上、下架商品</b-button>
+          </template>
         </b-table>
       </div>
     </div>
@@ -52,7 +55,9 @@ export default {
         { key: "name", sortable: true },
         { key: "amount", sortable: true },
         { key: "SaleAmount", sortable: true },
-        { key: "修改商品", sortable: false }
+        { key: "launched", sortable: true },
+        { key: "修改商品", sortable: false },
+        { key: "上、下架商品", sortable: false }
       ],
       items: [],
       hover: true,
@@ -77,6 +82,23 @@ export default {
         Toast.fire({
           icon: "error",
           title: "目前無法取得庫存資料，請稍後再試"
+        });
+      }
+    },
+    async changeLaunched(id) {
+      try {
+        const { statusText } = await adminAPI.changeLaunched(id);
+        if (statusText !== "OK") {
+          throw new Error(statusText);
+        }
+        Toast.fire({
+          icon: "success",
+          title: "成功更新上架狀態"
+        });
+      } catch {
+        Toast.fire({
+          icon: "error",
+          title: "更新上架狀態失敗，請稍後再試"
         });
       }
     }
