@@ -28,9 +28,9 @@
               <b-button size="sm" class="mr-2">修改商品</b-button>
             </router-link>
           </template>
-          <template v-slot:cell(上、下架商品)="row">
+          <!-- <template v-slot:cell(上、下架商品)="row">
             <b-button size="sm" class="mr-2" @click="changeLaunched(row.item.id)">上、下架商品</b-button>
-          </template>
+          </template>-->
         </b-table>
       </div>
     </div>
@@ -56,8 +56,8 @@ export default {
         { key: "amount", sortable: true },
         { key: "SaleAmount", sortable: true },
         { key: "launched", sortable: true },
-        { key: "修改商品", sortable: false },
-        { key: "上、下架商品", sortable: false }
+        { key: "修改商品", sortable: false }
+        // { key: "上、下架商品", sortable: false }
       ],
       items: [],
       hover: true,
