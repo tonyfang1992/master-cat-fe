@@ -42,7 +42,7 @@
             responsive="sm"
           >
             <template v-slot:cell(修改活動)="row">
-              <router-link :to="{name:'AdminEditProduct', params:{id:row.item.id}}">
+              <router-link :to="{name:'AdminEditNewActivity', params:{id:row.item.id}}">
                 <b-button size="sm" class="mr-2">修改活動</b-button>
               </router-link>
             </template>

@@ -16,7 +16,7 @@
           <label for="name">活動名稱</label>
           <input
             id="name"
-            v-model="ThisWeekActivity.name"
+            v-model="NewActivity.name"
             type="text"
             class="form-control"
             name="name"
@@ -29,7 +29,7 @@
           <label for="description">活動描述</label>
           <textarea
             id="description"
-            v-model="ThisWeekActivity.description"
+            v-model="NewActivity.description"
             type="text"
             class="form-control"
             name="description"
@@ -41,8 +41,8 @@
         <div class="form-group">
           <label for="image">Image</label>
           <img
-            v-if="ThisWeekActivity.image"
-            :src="ThisWeekActivity.image"
+            v-if="NewActivity.image"
+            :src="NewActivity.image"
             class="d-block img-thumbnail mb-3"
             width="150"
             height="150"
@@ -73,8 +73,8 @@ export default {
   },
   data() {
     return {
-      ThisWeekActivityId: "",
-      ThisWeekActivity: {
+      NewActivityId: "",
+      NewActivity: {
         name: "",
         description: "",
         image: ""
@@ -84,24 +84,23 @@ export default {
   },
   created() {
     const { id } = this.$route.params;
-    this.fetchEditThisWeekActivity(id);
+    this.fetchEditNewActivity(id);
   },
   beforeRouteUpdate(to, from, next) {
     // 路由改變時重新抓取資料
     const { id } = to.params;
-    this.fetchEditThisWeekActivity(id);
+    this.fetchEditNewActivity(id);
     next();
   },
   methods: {
-    async fetchEditThisWeekActivity(id) {
+    async fetchEditNewActivity(id) {
       try {
-        console.log(id);
-        this.ThisWeekActivityId = id;
-        const { data, statusText } = await adminAPI.getEditThisWeekActivity(id);
+        this.NewActivityId = id;
+        const { data, statusText } = await adminAPI.getEditNewActivity(id);
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
-        this.ThisWeekActivity = data.ThisWeekActivity;
+        this.NewActivity = data.NewActivity;
         this.isLoading = false;
       } catch {
         Toast.fire({
@@ -119,12 +118,12 @@ export default {
     },
     async handleSubmit(data) {
       try {
-        const targetThisWeekActivityId = this.ThisWeekActivityId;
+        const targetNewActivityId = this.NewActivityId;
         const form = data.target;
         const formData = new FormData(form);
-        const { statusText } = await adminAPI.editThisWeekActivity({
+        const { statusText } = await adminAPI.editNewActivity({
           formData,
-          targetThisWeekActivityId
+          targetNewActivityId
         });
 
         if (statusText !== "OK") {

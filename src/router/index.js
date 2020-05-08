@@ -160,6 +160,12 @@ const router = new Router({
       beforeEnter: authorizeIsAdmin,
     },
     {
+      path: "/admin/EditNewActivity/:id",
+      name: "AdminEditNewActivity",
+      component: () => import("../views/AdminEditNewActivity.vue"),
+      beforeEnter: authorizeIsAdmin,
+    },
+    {
       path: "/admin/NewActivity",
       name: "AdminCreateActivity",
       component: () => import("../views/AdminCreateActivity.vue"),

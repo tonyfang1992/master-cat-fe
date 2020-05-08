@@ -26,6 +26,11 @@ export default {
       headers: { Authorization: `Bearer ${getToken()}` },
     });
   },
+  getEditNewActivity(id) {
+    return apiHelper.get(`/admin/EditNewActivity/${id}`, {
+      headers: { Authorization: `Bearer ${getToken()}` },
+    });
+  },
   getOrder() {
     return apiHelper.get("/admin/orders", {
       headers: { Authorization: `Bearer ${getToken()}` },
@@ -49,6 +54,15 @@ export default {
   editThisWeekActivity({ formData, targetThisWeekActivityId }) {
     return apiHelper.put(
       `/admin/EditThisWeekActivity/${targetThisWeekActivityId}`,
+      formData,
+      {
+        headers: { Authorization: `Bearer ${getToken()}` },
+      }
+    );
+  },
+  editNewActivity({ formData, targetNewActivityId }) {
+    return apiHelper.put(
+      `/admin/EditNewActivity/${targetNewActivityId}`,
       formData,
       {
         headers: { Authorization: `Bearer ${getToken()}` },
