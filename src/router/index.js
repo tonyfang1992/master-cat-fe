@@ -154,6 +154,12 @@ const router = new Router({
       beforeEnter: authorizeIsAdmin,
     },
     {
+      path: "/admin/EditThisWeekActivity/:id",
+      name: "AdminEditThisWeekActivity",
+      component: () => import("../views/AdminEditThisWeekActivity.vue"),
+      beforeEnter: authorizeIsAdmin,
+    },
+    {
       path: "/admin/NewActivity",
       name: "AdminCreateActivity",
       component: () => import("../views/AdminCreateActivity.vue"),
@@ -169,6 +175,12 @@ const router = new Router({
       path: "/admin/store",
       name: "AdminGetStore",
       component: () => import("../views/AdminGetStore.vue"),
+      beforeEnter: authorizeIsAdmin,
+    },
+    {
+      path: "/admin/activity",
+      name: "AdminGetActivity",
+      component: () => import("../views/AdminGetActivity.vue"),
       beforeEnter: authorizeIsAdmin,
     },
     {

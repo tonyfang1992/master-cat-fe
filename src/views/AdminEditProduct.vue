@@ -368,7 +368,7 @@ export default {
       } catch {
         Toast.fire({
           icon: "error",
-          title: "現在無法新增商品，請稍後再試"
+          title: "現在無法修改商品，請稍後再試"
         });
       }
     }
