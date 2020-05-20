@@ -1,7 +1,9 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-
-const baseURL = "https://master-cat-be.herokuapp.com/api";
+let baseURL = "http://localhost:3001/api";
+if (process.env.NODE_ENV === "production") {
+  baseURL = "https://master-cat-be.herokuapp.com/api";
+}
 export const apiHelper = axios.create({
   baseURL,
 });
