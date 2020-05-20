@@ -16,6 +16,11 @@ export default {
       headers: { Authorization: `Bearer ${getToken()}` },
     });
   },
+  getStoreByCategory(categoryId) {
+    return apiHelper.get(`/admin/store/${categoryId}`, {
+      headers: { Authorization: `Bearer ${getToken()}` },
+    });
+  },
   getActivity() {
     return apiHelper.get("/admin/activity", {
       headers: { Authorization: `Bearer ${getToken()}` },

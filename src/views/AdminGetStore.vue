@@ -11,6 +11,16 @@
       <AdminMenu />
     </div>
     <div class="col-7 row mt-5">
+      <div class="col-12 row">
+        <b-button-group>
+          <b-button
+            v-for="category in Categories"
+            :key="category.id"
+            variant="info"
+            @click="getStoreByCategory(category.id)"
+          >{{category.name}}</b-button>
+        </b-button-group>
+      </div>
       <div>
         <b-table
           v-show="!isLoading"
@@ -62,6 +72,7 @@ export default {
       items: [],
       hover: true,
       dark: false,
+      Categories: [],
       isLoading: true
     };
   },
@@ -76,7 +87,7 @@ export default {
           throw new Error(statusText);
         }
         this.items = data.products;
-
+        this.Categories = data.Categories;
         this.isLoading = false;
       } catch {
         Toast.fire({
@@ -85,20 +96,38 @@ export default {
         });
       }
     },
-    async changeLaunched(id) {
+    // async changeLaunched(id) {
+    //   try {
+    //     const { statusText } = await adminAPI.changeLaunched(id);
+    //     if (statusText !== "OK") {
+    //       throw new Error(statusText);
+    //     }
+    //     Toast.fire({
+    //       icon: "success",
+    //       title: "成功更新上架狀態"
+    //     });
+    //   } catch {
+    //     Toast.fire({
+    //       icon: "error",
+    //       title: "更新上架狀態失敗，請稍後再試"
+    //     });
+    //   }
+    // }
+    async getStoreByCategory(categoryId) {
       try {
-        const { statusText } = await adminAPI.changeLaunched(id);
+        this.isLoading = true;
+        const { data, statusText } = await adminAPI.getStoreByCategory(
+          categoryId
+        );
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
-        Toast.fire({
-          icon: "success",
-          title: "成功更新上架狀態"
-        });
+        this.items = data.products;
+        this.isLoading = false;
       } catch {
         Toast.fire({
           icon: "error",
-          title: "更新上架狀態失敗，請稍後再試"
+          title: "目前無法取得庫存資料，請稍後再試"
         });
       }
     }
