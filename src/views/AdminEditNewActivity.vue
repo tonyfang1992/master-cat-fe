@@ -2,7 +2,7 @@
   <div class="inner row">
     <div class="col-1"></div>
     <div class="col-10 mt-5">
-      <h1>新增商品</h1>
+      <h1>修改活動</h1>
       <hr />
     </div>
     <div class="col-1"></div>
